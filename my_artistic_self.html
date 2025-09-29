@@ -1,16 +1,11 @@
 <!DOCTYPE html> 
-<!-- Declares this as an HTML document -->
 <html>
-<!-- Root element of the HTML document -->
-
 <head>
-    <!-- Contains meta information about the document -->
     <title>Oliver's Artistic Self</title> 
-    <!-- Sets the title that appears in the browser tab -->
     <meta charset="UTF-8">
-    <!-- Specifies the character encoding for the document (UTF-8 supports all Unicode characters) -->
     <meta name="author" content="Oliver Raga">
-    <!-- Provides metadata about the author of the page -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="my_style.css">
     
     <style>
         /* Begins the CSS styling section */
@@ -187,28 +182,29 @@
             /* Darkens the background on hover */
         }
     </style>
-    <!-- Ends the CSS styling section -->
-</head>
+    </head>
 
 <body>
-    <!-- Contains the visible content of the webpage -->
-    <h1>My Artistic Self</h1>
-    <!-- Main heading of the page -->
-    
-    <!-- Series of paragraph elements with keyword class and unique IDs -->
-    <p class="keyword" id="adventure">Adventure</p>
-    <p class="keyword" id="technology">Technology</p>
-    <p class="keyword" id="curious">Curious</p>
-    <p class="keyword" id="creative">Creative</p>
-    <p class="keyword" id="global">Global</p>
-    
-    <!-- Div element containing the explanation text -->
-    <div class="explanation">
-        <p>The background image represents the intersection of technology and art - the vibrant, flowing digital patterns mirror my passion for both coding and creative expression. The five keywords capture different aspects of my personality: my love for <strong>adventure</strong> through travel and new experiences, my dedication to <strong>technology</strong> and programming, my naturally <strong>curious</strong> mind that drives me to learn, my <strong>creative</strong> approach to problem-solving, and my <strong>global</strong> perspective shaped by living in Venezuela, Dubai, the US, and now Canada.</p>
+    <div class="body_wrapper">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="my_vacation.html">My Dream Vacation</a>
+            <a href="my_artistic_self.html" class="current-page">My Artistic Self</a>
+        </nav>
+
+        <h1>My Artistic Self</h1>
+        <p class="keyword" id="adventure">Adventure</p>
+        <p class="keyword" id="technology">Technology</p>
+        <p class="keyword" id="curious">Curious</p>
+        <p class="keyword" id="creative">Creative</p>
+        <p class="keyword" id="global">Global</p>
+        
+        <div class="explanation">
+            <p>The background image represents the intersection of technology and art - the vibrant, flowing digital patterns mirror my passion for both coding and creative expression. The five keywords capture different aspects of my personality: my love for <strong>adventure</strong> through travel and new experiences, my dedication to <strong>technology</strong> and programming, my naturally <strong>curious</strong> mind that drives me to learn, my <strong>creative</strong> approach to problem-solving, and my <strong>global</strong> perspective shaped by living in Venezuela, Dubai, the US, and now Canada.</p>
+        </div>
+        
+        <a href="index.html" class="home-link">← Back to Home</a>
     </div>
-    
-    <!-- Link to navigate back to the home page -->
-    <a href="index.html" class="home-link">← Back to Home</a>
+    <footer>This website is made for CS203 labs!</footer>
 </body>
 </html>
-<!-- Ends the HTML document -->
