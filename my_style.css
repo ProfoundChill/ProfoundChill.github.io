@@ -11,7 +11,7 @@ html, body {
 .body_wrapper {
     box-sizing: border-box; /* sizing the box's border*/
     min-height: 100%; /* setting the min height  */
-    display: flex; /*  */
+    display: flex; 
     flex-direction: column; 
 }
 
@@ -43,12 +43,12 @@ a:link {
 }
 
 a:visited {
-    color: #050405; /* After clicking its black */
+    color: #fdfdfd; /* After clicking its white */
     text-decoration: none;
 }
 
 a:hover {
-    color: #ff6f00; /* When hovered its orange*/
+    color: #fdc397; /* When hovered its like a sking color*/
     text-decoration: underline; /* Add underline back on hover */
 }
 
@@ -90,7 +90,7 @@ nav a:hover {
  * Additional Styles (Moved from index.html)
  */
 h3 {
-    color: lightblue; 
+    color: rgb(93, 62, 172); 
 }
 
 table {
@@ -143,4 +143,55 @@ td:nth-child(3) {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #333; /* Even darker gray on hover */
+}
+
+/*
+ * Styles for the Main Page (index.html)
+ */
+
+/* Add a subtle background to the body for a more modern feel */
+body {
+    background-color: #f4f4f9;
+}
+
+/* Style for the main page headers to center them */
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* This styles the main h1 to look like the one on your artistic-self page */
+h1 {
+    background-color: rgba(46, 139, 87, 0.8); /* Semi-transparent nav green */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 20px auto; /* Centers the heading block */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+}
+
+/* This creates the 'card' effect for each section on the main page */
+.content-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    max-width: 800px; /* Limits the width for readability */
+    margin: 30px auto; /* Adds space between boxes and centers them */
+    color: #333;
+    line-height: 1.6;
+}
+
+/*
+ * Styles for the Marketplace Page
+ */
+.marketplace-content {
+    max-width: 800px; /* Limits the width */
+    margin: 30px auto; /* Centers the block on the page */
+    text-align: center; /* Centers all the text inside */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
