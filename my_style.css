@@ -1,0 +1,146 @@
+/*
+ * Part 2: Sticky Footer Setup
+ * This ensures the footer sticks to the bottom, even on short pages.
+ */
+html, body {
+    box-sizing: border-box; /* sizing the box's border*/
+    height: 100%;  
+    margin: 0; /* Removing default body margin */
+}
+
+.body_wrapper {
+    box-sizing: border-box; /* sizing the box's border*/
+    min-height: 100%; /* setting the min height  */
+    display: flex; /*  */
+    flex-direction: column; 
+}
+
+/*
+ * Part 2: Footer Styling
+ */
+footer {
+    background-color: #333333; /* Dark gray background  */
+    color: white; /* White text color  */
+    height: 40px; /* Set a height  */
+    padding: 0 15px; /* Add some horizontal padding */
+    margin-top: auto; /* Pushes the footer to the bottom of the flex container */
+
+    /* Centering the text vertically  */
+    display: flex;
+    align-items: center; /* Vertically centers the content */
+
+    font-size: 0.9em;
+    text-align: center;
+    width: 100%; /* Ensure it spans full width */
+}
+
+/*
+ * Part 1: Hyperlinks Styling
+ */
+a:link {
+    color: #007bff; /* Before any action  */
+    text-decoration: none; /* Removed the  underline for a cleaner look */
+}
+
+a:visited {
+    color: #050405; /* After clicking its black */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ff6f00; /* When hovered its orange*/
+    text-decoration: underline; /* Add underline back on hover */
+}
+
+a:active {
+    color: #dc3545; /* While being clicked it hovers red */
+}
+
+/*
+ * Part 3: The Navigation Menu Styling
+ */
+nav {
+    background-color: #2E8B57; /* A nice forest green */
+    padding: 10px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    display: inline-block; /* Allows spacing and styling */
+}
+
+nav a:hover {
+    background-color: #3CB371; /* Lighter green on hover */
+    text-decoration: none; /* Keep underline off the nav links */
+}
+
+/* Highlight for the current page  */
+.current-page {
+    background-color: #1e6c40; /* Darker green to highlight */
+    font-weight: bold;
+}
+
+/*
+ * Additional Styles (Moved from index.html)
+ */
+h3 {
+    color: lightblue; 
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Georgia, serif; 
+    font-size: 0.9em; 
+}
+
+th {
+    color: rgb(64, 11, 150);
+    padding: 1em; 
+    font-family: Arial, sans-serif;
+    background-color: #e6f3ff;
+}
+
+td {
+    padding: 0.8em;
+}
+
+tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+
+td:nth-child(3) {
+    text-align: center;
+}
+
+/*
+ * Part 4: The Scrollbar Styling
+ * (Uses WebKit prefixes for most browser support)
+ */
+
+/* Width of the scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track (the area on which the thumb scrolls) */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+    background: #5e5e5e; /* Darker gray for visibility */
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #333; /* Even darker gray on hover */
+}

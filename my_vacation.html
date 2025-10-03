@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html>
-    <head> <!-- here ive created a new header for the next part 0-0 -->
-        <title>Oli's Dream Vacation Experience</title> 
-        <meta charset="UTF-8"> <!-- Setting the character encoding for the document to UTF-8 -->
-        <meta name="author" content="Oliver Raga"> <!-- Setting the author of the document to my name -->
+    <head> <title>Oli's Dream Vacation Experience</title> <!-- here ive created a new header for the next part 0-0 -->
+        <meta charset="UTF-8"> <meta name="author" content="Oliver Raga"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Setting the author of the document to my name --> <!-- Setting the character encoding for the document to UTF-8 -->
+        <link rel="stylesheet" href="my_style.css">
     </head>
     <body>
-        <h1>Trip to Kenya</h1>
-        <p>My ideal vacation would be a trip to Nairobi, Kenya, with my family. It would be a breathtaking experience to see animals you usually see on National Geographic, like giraffes, tigers, and lions. The greatest part of the trip would be a hot air balloon ride with my entire family, which would be an absolutely amazing and unforgettable experience.</p>
+        <div class="body_wrapper">
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="my_vacation.html" class="current-page">My Dream Vacation</a>
+                <a href="my_artistic_self.html">My Artistic Self</a>
+            </nav>
+            
+            <h1>Trip to Kenya</h1>
+            <p>My ideal vacation would be a trip to Nairobi, Kenya, with my family. It would be a breathtaking experience to see animals you usually see on National Geographic, like giraffes, tigers, and lions. The greatest part of the trip would be a hot air balloon ride with my entire family, which would be an absolutely amazing and unforgettable experience.</p>
+             <!-- Fixed image with inline CSS styling while keeping your original comments -->
+            <img src= "images/Africa.JPG" alt="Hot Air Balloon in Kenya" 
+                 style="border: 4px solid #8B4513; border-radius: 15px; width: 80%; height: auto; max-width: 800px; object-fit: cover; box-shadow: 0 4px 8px rgba(0,0,0,0.3); display: block; margin: 20px auto;"> </div> <!-- ive adjusted the image, as well as the width and height of it so it looks presentable within the next page -->
         
-        <!-- Fixed image with inline CSS styling while keeping your original comments -->
-        <img src= "images/Africa.JPG" alt="Hot Air Balloon in Kenya" 
-             style="border: 4px solid #8B4513; border-radius: 15px; width: 800px; height: 600px; object-fit: cover; box-shadow: 0 4px 8px rgba(0,0,0,0.3);"> <!-- ive adjusted the image, as well as the width and height of it so it looks presentable within the next page -->
-        
-        <div style="margin-top: 15px; padding: 10px; background-color: #f0f0f0; border-radius: 5px;">
-            <a href="index.html" style="color: #2E8B57; text-decoration: none; font-weight: bold;">← Back to Home</a> <!-- here ive added a link to go back to the home page -->
-        </div>
+        <footer>This website is made for CS203 labs!</footer>
     </body>
 </html>
