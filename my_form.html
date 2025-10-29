@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Quiz Form</title>
+    <link rel="stylesheet" href="my_style.css">
+    
+    <script src="nav.js"></script>
+    
+</head>
+<body>
+    <div class="body_wrapper">
+        
+        <nav id="main-nav"></nav>
+        <script>
+            // Call setNav with the current page path to highlight the current link
+            setNav(location.pathname); 
+        </script>
+
+        <h1>Which Type Are You?</h1>
+
+        <div class="form-content">
+            
+            <script src="2-form-validation.js"></script>
+
+            <form id="quiz-form" onsubmit="return validate(event)"> 
+                
+                <fieldset>
+                    <legend>Which type are you?</legend> <label for="user-name">What is your name?</label>
+                    <input type="text" id="user-name" name="userName" required><br><br>
+
+                    <label for="user-email">What is your email?</label>
+                    <input type="email" id="user-email" name="userEmail" required><br><br>
+
+                    <p><strong>Question 1:</strong> If you had to choose your favorite activity for a Friday night, what would you choose?</p>
+                    <input type="radio" id="q1-a" name="q1_activity" value="a" required>
+                    <label for="q1-a">Binge watching Netflix until midnight, and ordering in.</label><br>
+                    <input type="radio" id="q1-b" name="q1_activity" value="b">
+                    <label for="q1-b">Go out dancing, both hands in the air until 3AM.</label><br>
+                    <input type="radio" id="q1-c" name="q1_activity" value="c">
+                    <label for="q1-c">Invite friends for supper and play board games when the kids are asleep.</label><br><br>
+
+                    <label for="q2-kids"><strong>Question 2:</strong> How many kids do you want?</label>
+                    <input type="number" id="q2-kids" name="q2_kids" min="0" max="10" required><br><br>
+
+                    <p><strong>Question 3:</strong> What are your preferred music genres? (Select all that apply)</p>
+                    <input type="checkbox" id="q3-pop" name="q3_music" value="pop">
+                    <label for="q3-pop">Pop</label><br>
+                    <input type="checkbox" id="q3-rock" name="q3_music" value="rock">
+                    <label for="q3-rock">Rock</label><br>
+                    <input type="checkbox" id="q3-jazz" name="q3_music" value="jazz">
+                    <label for="q3-jazz">Jazz</label><br><br>
+
+                    <label for="q4-dream"><strong>Question 4:</strong> Describe your dream vacation in a few words:</label><br>
+                    <textarea id="q4-dream" name="q4_dream" rows="3" required></textarea><br><br>
+
+                    <label for="q5-pet"><strong>Question 5:</strong> What is your spirit animal?</label>
+                    <select id="q5-pet" name="q5_pet" required>
+                        <option value="">--Please choose an option--</option>
+                        <option value="lion">Lion</option>
+                        <option value="eagle">Eagle</option>
+                        <option value="dolphin">Dolphin</option>
+                        <option value="cat">Cat</option>
+                    </select><br><br>
+
+                    <input type="submit" value="Get My Score!" class="submit-button">
+
+                </fieldset>
+            </form>
+        </div>
+        
+    </div>
+    <footer>This website is made for CS203 labs!</footer>
+</body>
+</html>
