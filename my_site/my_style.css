@@ -38,7 +38,7 @@ footer {
  * Part 1: Hyperlinks Styling
  */
 a:link {
-    color: #007bff; /* Before any action  */
+    color: #333; /* Before any action  */
     text-decoration: none; /* Removed the  underline for a cleaner look */
 }
 
