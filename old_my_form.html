@@ -18,7 +18,7 @@
             setNav(location.pathname); 
         </script>
 
-        <h1 class="form-title">Which Type Are You?</h1>
+        <h1>Which Type Are You?</h1>
 
         <div class="form-content">
             
@@ -33,15 +33,13 @@
                     <label for="user-email">What is your email?</label>
                     <input type="email" id="user-email" name="userEmail" required><br><br>
 
-                    <p><strong>Question 1:</strong> If you had to choose a type of dessert that describes you what would it be?</p>
-                    <input type="radio" id="q1-a" name="q1_dessert" value="a" required>
-                    <label for="q1-a">Any type of Cookie</label><br>
-                    <input type="radio" id="q1-b" name="q1_dessert" value="b">
-                    <label for="q1-b">Any type of Cake</label><br>
-                    <input type="radio" id="q1-c" name="q1_dessert" value="c">
-                    <label for="q1-c">Any type of Pie </label><br>
-                    <input type="radio" id="q1-a" name="q1_dessert" value="d">
-                    <label for="q1-d"> Other </label><br><br>
+                    <p><strong>Question 1:</strong> If you had to choose your favorite activity for a Friday night, what would you choose?</p>
+                    <input type="radio" id="q1-a" name="q1_activity" value="a" required>
+                    <label for="q1-a">Binge watching Netflix until midnight, and ordering in.</label><br>
+                    <input type="radio" id="q1-b" name="q1_activity" value="b">
+                    <label for="q1-b">Go out dancing, both hands in the air until 3AM.</label><br>
+                    <input type="radio" id="q1-c" name="q1_activity" value="c">
+                    <label for="q1-c">Invite friends for supper and play board games when the kids are asleep.</label><br><br>
 
                     <label for="q2-kids"><strong>Question 2:</strong> How many kids do you want?</label>
                     <input type="number" id="q2-kids" name="q2_kids" min="0" max="10" required><br><br>
@@ -52,21 +50,13 @@
                     <input type="checkbox" id="q3-rock" name="q3_music" value="rock">
                     <label for="q3-rock">Rock</label><br>
                     <input type="checkbox" id="q3-jazz" name="q3_music" value="jazz">
-                    <label for="q3-jazz">Jazz</label><br><br> <!-- Checkboxes for music genre selection -->
+                    <label for="q3-jazz">Jazz</label><br><br>
 
-                    <p><strong>Question 4:</strong> What's your favorite season of the year?</p>
-                    <input type="radio" id="q4-a" name="q4_activity" value="a" required>
-                    <label for="q4-a">Summer (Beach, sun, and late nights).</label><br>
-                    <input type="radio" id="q4-b" name="q4_activity" value="b">
-                    <label for="q4-b">Winter (Snowboarding, hot chocolate, and fireplace).</label><br>
-                    <input type="radio" id="q4-c" name="q4_activity" value="c">
-                    <label for="q4-c">Fall (Crisp air, hoodies, and pumpkin spice).</label><br><br>
-                    
                     <label for="q4-dream"><strong>Question 4:</strong> Describe your dream vacation in a few words:</label><br>
                     <textarea id="q4-dream" name="q4_dream" rows="3" required></textarea><br><br>
 
                     <label for="q5-pet"><strong>Question 5:</strong> What is your spirit animal?</label>
-                    <select id="q5-pet" name="q5_pet" required> <!--` Dropdown menu for spirit animal selection -->
+                    <select id="q5-pet" name="q5_pet" required>
                         <option value="">--Please choose an option--</option>
                         <option value="lion">Lion</option>
                         <option value="eagle">Eagle</option>
