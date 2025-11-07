@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My To-Do List</title>
+    <link rel="stylesheet" href="my_style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script src="nav.js"></script>
+</head>
+<body>
+    <div class="body_wrapper">
+        
+        <nav id="main-nav"></nav>
+        <script>
+            // Calls the setNav function to build the navigation and highlight the current page
+            setNav(location.pathname); 
+        </script>
+
+        <h1>My To-Do List</h1>
+        
+        <div class="form-content" style="background-color: #ffc399; padding: 20px;">
+            <h2>Add a to-do item!</h2>
+            <form id="add-item-form"> 
+                <input type="text" id="todo-input" placeholder="Get a gift for hubby's anniversary">
+                <input type="button" value="Add Item" onclick="addItem()">
+            </form>
+        </div>
+
+        <div class="content-box">
+            <h2>My To-Do list this week!</h2>
+            <ul id="todo-list-container">
+                </ul>
+        </div>
+        
+    </div>
+    <footer>This website is made for CS203 labs!</footer>
+    <script src="todo.js"></script> 
+</body>
+</html>
