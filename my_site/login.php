@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
             // Case 2: Osiris/Web Server path (The Fix is here!)
             $protocol = 'https://';
             // **CORRECTED PATH**: Must include the /my_site/ subfolder
-            $path_suffix = '/~oraga/my_site/'; 
+            $path_suffix = '/~oraga/my_site/to-do.php'; 
         }
 
         // Construct the full URL and Redirect
