@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,23 +5,18 @@
     <title>Marketplace</title>
     <link rel="stylesheet" href="my_style.css">
     
-    <script src="nav.js"></script> 
+    
     </head>
 <body>
     <div class="body_wrapper">
         
-        <nav id="main-nav"></nav>
-        <script>
-            // Call setNav with the current page path to highlight the current link
-            setNav(location.pathname); 
-        </script>
-        <h1>Hello! This is a marketplace</h1>
+    <?php require_once 'nav.php'; ?>
+        
+        <h1>Hello! This is my wonderful marketplace</h1>
 
         <div class="marketplace-content">
             <script src="1-marketplace.js"></script>
         </div>
         
     </div>
-    <footer>This website is made for CS203 labs!</footer>
-</body>
-</html>
+   
