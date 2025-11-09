@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
             // Case 2: Osiris/Web Server path - Use HTTPS and the full relative path
             $protocol = 'https://';
             // The path must include /~oraga/ and the subfolder /my_site/
-            $path_suffix = '/~oraga/my_site/'; 
+            $path_suffix = '/~oraga/my_site/to-do.php'; 
         } else {
             // Case 1: Local XAMPP/LAMP setup - Use HTTP and the local repo name
             $protocol = 'http://';
