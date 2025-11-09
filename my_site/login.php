@@ -19,20 +19,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
     // 3. Verify if the entered password's hash matches the correct hash
     if ($input_hash === $correct_hash) {
 
-        // --- Redirection Logic (CORRECTED Dynamic Path) ---
+        // --- Redirection Logic (FINAL, Simplified Dynamic Path) ---
         $host = $_SERVER['HTTP_HOST'];
         $target_file = 'to-do.php';
-
-        // Case 1: Local XAMPP/LAMP setup
-        if (strpos($host, 'localhost') !== false || strpos($host, '127.0.0.1') !== false) {
-            $protocol = 'http://';
-            // Local XAMPP/LAMP setup path: uses the repo name
-            $path_suffix = '/ProfoundChill.github.io/';
-        } else {
-            // Case 2: Osiris/Web Server path (The Fix is here!)
+        
+        // Check if we are on the Osiris server
+        if (strpos($host, 'osiris.ubishops.ca') !== false) {
+            // Case 2: Osiris/Web Server path - Use HTTPS and the full relative path
             $protocol = 'https://';
-            // **CORRECTED PATH**: Must include the /my_site/ subfolder
-            $path_suffix = '/~oraga/my_site/to-do.php'; 
+            // The path must include /~oraga/ and the subfolder /my_site/
+            $path_suffix = '/~oraga/my_site/'; 
+        } else {
+            // Case 1: Local XAMPP/LAMP setup - Use HTTP and the local repo name
+            $protocol = 'http://';
+            $path_suffix = '/ProfoundChill.github.io/';
         }
 
         // Construct the full URL and Redirect
