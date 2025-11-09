@@ -1,0 +1,261 @@
+/*
+ * Part 2: Sticky Footer Setup
+ * This ensures the footer sticks to the bottom, even on short pages.
+ */
+html, body {
+    box-sizing: border-box; /* sizing the box's border*/
+    height: 100%;  
+    margin: 0; /* Removing default body margin */
+}
+
+.body_wrapper {
+    box-sizing: border-box; /* sizing the box's border*/
+    min-height: 100%; /* setting the min height  */
+    display: flex; 
+    flex-direction: column; 
+}
+
+/*
+ * Part 2: Footer Styling
+ */
+footer {
+    background-color: #333333; /* Dark gray background  */
+    color: white; /* White text color  */
+    height: 40px; /* Set a height  */
+    padding: 0 15px; /* Add some horizontal padding */
+    margin-top: auto; /* Pushes the footer to the bottom of the flex container */
+
+    /* Centering the text vertically  */
+    display: flex;
+    align-items: center; /* Vertically centers the content */
+
+    font-size: 0.9em;
+    text-align: center;
+    width: 100%; /* Ensure it spans full width */
+}
+
+/*
+ * Part 1: Hyperlinks Styling
+ */
+a:link {
+    color: #333; /* Before any action  */
+    text-decoration: none; /* Removed the  underline for a cleaner look */
+}
+
+a:visited {
+    color: #fdfdfd; /* After clicking its white */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #fdc397; /* When hovered its like a sking color*/
+    text-decoration: underline; /* Add underline back on hover */
+}
+
+a:active {
+    color: #dc3545; /* While being clicked it hovers red */
+}
+
+/*
+ * Part 3: The Navigation Menu Styling
+ */
+nav {
+    background-color: #2E8B57; /* A nice forest green */
+    padding: 10px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    display: inline-block; /* Allows spacing and styling */
+}
+
+nav a:hover {
+    background-color: #3CB371; /* Lighter green on hover */
+    text-decoration: none; /* Keep underline off the nav links */
+}
+
+/* Highlight for the current page  */
+.current-page {
+    background-color: #1e6c40; /* Darker green to highlight */
+    font-weight: bold;
+}
+
+/*
+ * Additional Styles (Moved from index.html)
+ */
+h3 {
+    color: rgb(93, 62, 172); 
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Georgia, serif; 
+    font-size: 0.9em; 
+}
+
+th {
+    color: rgb(64, 11, 150);
+    padding: 1em; 
+    font-family: Arial, sans-serif;
+    background-color: #e6f3ff;
+}
+
+td {
+    padding: 0.8em;
+}
+
+tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+
+td:nth-child(3) {
+    text-align: center;
+}
+
+/*
+ * Part 4: The Scrollbar Styling
+ * (Uses WebKit prefixes for most browser support)
+ */
+
+/* Width of the scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track (the area on which the thumb scrolls) */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+    background: #5e5e5e; /* Darker gray for visibility */
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #333; /* Even darker gray on hover */
+}
+
+/*
+ * Styles for the Main Page (index.html)
+ */
+
+/* Add a subtle background to the body for a more modern feel */
+body {
+    background-color: #f4f4f9;
+}
+
+/* Style for the main page headers to center them */
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* This styles the main h1 to look like the one on your artistic-self page */
+h1 {
+    background-color: rgba(46, 139, 87, 0.8); /* Semi-transparent nav green */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 20px auto; /* Centers the heading block */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+}
+
+/* This creates the 'card' effect for each section on the main page */
+.content-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    max-width: 800px; /* Limits the width for readability */
+    margin: 30px auto; /* Adds space between boxes and centers them */
+    color: #333;
+    line-height: 1.6;
+}
+
+/*
+ * Styles for the Marketplace Page
+ */
+.marketplace-content {
+    max-width: 800px; /* Limits the width */
+    margin: 30px auto; /* Centers the block on the page */
+    text-align: center; /* Centers all the text inside */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+/*
+ * Styles for the My Quiz Form Page (my_form.html)
+ */
+.form-content {
+    background-color: #ffc399; /* Your specified orange/skin color */
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    color: #333;
+}
+
+fieldset {
+    border: 3px solid #FFD700; /* Gold border for a "quiz card" look */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+legend {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #9A031E;
+    padding: 0 10px;
+    /* Unique touch: Add a small icon next to the legend */
+}
+
+legend::before {
+    content: "💎 "; /* A diamond icon for a stylish quiz title */
+    font-size: 1.2em;
+}
+
+/* Style the text inputs and textarea */
+input[type="text"], input[type="email"], input[type="number"], textarea, select {
+    width: 98%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.submit-button {
+    background-color: #004E89; /* Dark blue button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    float: right; /* Keeps it on the right side */
+    margin-top: 20px;
+}
+
+.submit-button:hover {
+    background-color: #007bff;
+}
+
+/* Clearfix to contain the floated submit button */
+.form-content::after {
+    content: "";
+    display: table;
+    clear: both;
+}
