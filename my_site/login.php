@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
         // Check if we are on the Osiris server
         if (strpos($host, 'osiris.ubishops.ca') !== false) {
             // Case 2: Osiris/Web Server path - Use HTTPS and the full relative path
-            $protocol = 'https://osiris.ubishops.ca/~oraga/my_site/to-do.php';
+            $protocol = 'https://';
             // The path must include /~oraga/ and the subfolder /my_site/
             $path_suffix = '/~oraga/my_site/to-do.php'; 
         } else {
