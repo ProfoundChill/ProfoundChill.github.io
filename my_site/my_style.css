@@ -4,15 +4,15 @@
  */
 html, body {
     box-sizing: border-box; /* sizing the box's border*/
-    height: 100%;
+    height: 100%;  
     margin: 0; /* Removing default body margin */
 }
 
 .body_wrapper {
     box-sizing: border-box; /* sizing the box's border*/
     min-height: 100%; /* setting the min height  */
-    display: flex;
-    flex-direction: column;
+    display: flex; 
+    flex-direction: column; 
 }
 
 /*
@@ -90,19 +90,19 @@ nav a:hover {
  * Additional Styles (Moved from index.html)
  */
 h3 {
-    color: rgb(93, 62, 172);
+    color: rgb(93, 62, 172); 
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    font-family: Georgia, serif;
-    font-size: 0.9em;
+    font-family: Georgia, serif; 
+    font-size: 0.9em; 
 }
 
 th {
     color: rgb(64, 11, 150);
-    padding: 1em;
+    padding: 1em; 
     font-family: Arial, sans-serif;
     background-color: #e6f3ff;
 }
@@ -258,298 +258,4 @@ input[type="text"], input[type="email"], input[type="number"], textarea, select 
     content: "";
     display: table;
     clear: both;
-}
-
-/*
- * New Styles for the Slideshow Carousel (to make it bigger and overlay navigation)
- */
-.slideshow {
-    /* Set a max width for the whole carousel to make it bigger */
-    max-width: 600px; /* Adjust this value to control the maximum size */
-    margin: 20px auto; /* Center the slideshow on the page */
-    position: relative; /* **Key:** Establishes a positioning context for the prev/next links */
-    overflow: hidden;
-    border-radius: 10px; /* Nicer: Add rounded corners to the carousel frame */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Nicer: Add a prominent shadow */
-}
-
-/* Ensure images fill their container */
-.slideshow_img img {
-    width: 100%;
-    display: block; /* Removes any extra space below the image */
-    height: auto;
-}
-
-/* Style and position the navigation links OVER the image */
-.prev-link, .next-link {
-    cursor: pointer;
-    position: absolute; /* **Key:** Position them over the picture */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%); /* Adjust for perfect vertical centering */
-    padding: 16px;
-    color: white; /* Text color for the controls */
-    font-weight: bold;
-    font-size: 20px;
-    transition: 0.6s ease;
-    user-select: none;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-    z-index: 10; /* Ensure they are above the image */
-    text-decoration: none; /* Remove underline */
-}
-
-/* Position the 'previous' link on the left */
-.prev-link {
-    left: 0;
-    border-radius: 0 4px 4px 0;
-}
-
-/* Position the 'next' link on the right */
-.next-link {
-    right: 0;
-    border-radius: 4px 0 0 4px;
-}
-
-/* Hover effect for the controls */
-.prev-link:hover, .next-link:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-/* Styling for the Logo Image */
-.nav-logo {
-    /* Set a specific, small height for the logo */
-    height: 30px;
-    width: auto; /* Maintain aspect ratio */
-    vertical-align: middle; /* Aligns the image nicely with the text links */
-    /* Remove any default link styling from the image */
-    border: none;
-    padding: 0;
-    margin: 0;
-}
-
-/* Ensure the link container is treated like a regular navigation item */
-.logo-link {
-    /* Set the padding on the image link (where it used to be on the text) */
-    padding: 10px 15px;
-}
-
-/* Optional: Make the logo link hover/active state look the same as the others */
-.logo-link:hover, .logo-link.current-page {
-    /* Use the same background/color as your other nav links */
-    background-color: #9A031E;
-    color: white;
-}
-/* --- Dropdown Menu Styling --- */
-
-/* 1. The Container: Needs position: relative for the content to be absolute inside it */
-.dropdown {
-    position: relative;
-    display: inline-block; /* Makes it behave like a normal nav item */
-    height: 100%; /* Important to match the height of the nav bar */
-}
-
-/* 2. The Button: Styles the clickable 'Discover me!' text to look like a normal nav link */
-.dropbtn {
-    background-color: transparent; /* Makes the background match the nav bar */
-    color: white;
-    padding: 14px 16px; /* Match the padding of your other nav links */
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    height: 100%; /* Match the height of the nav bar */
-    display: block; /* Allows full height to be clickable */
-    /* Ensure the button text matches the link font/style */
-    font-family: inherit;
-    /* The arrow (&#9660;) is added with HTML/CSS. This is just a nice-looking button. */
-}
-
-/* 3. The Content: Hidden by default, absolute position to float over the page */
-.dropdown-content {
-    display: none; /* CRITICAL: Hides the menu initially */
-    position: absolute; /* Floats over the rest of the content */
-    background-color: #333333; /* Dark background for the menu itself */
-    min-width: 180px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 10; /* Ensures it sits above other page content */
-}
-
-/* 4. Dropdown Links: Style the links inside the menu */
-.dropdown-content a {
-    color: white;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block; /* Makes each link take up the full width */
-    text-align: left; /* Aligns the text left for a standard drop-down */
-}
-
-/* 5. Hover Effects: Changes color when hovering over the links */
-.dropdown-content a:hover {
-    background-color: #9A031E; /* Use your existing hover color */
-}
-
-/* 6. The Magic: Show the dropdown content when hovering over the main .dropdown container */
-.dropdown:hover .dropdown-content {
-    display: block; /* CRITICAL: Shows the content when the mouse is over the container */
-}
-
-/* Optional: Add a hover color to the button too */
-.dropdown:hover .dropbtn {
-    background-color: #9A031E;
-}
-/* --- Mobile/Responsive Navigation Styles --- */
-
-/* 1. Hamburger Icon: Hide it by default (desktop view) */
-.icon {
-    display: none;
-}
-
-/* 2. Media Query: Styles that only apply when the screen width is 200px or less */
-@media screen and (max-width: 200px) {
-
-    /* Make all default links/dropdowns disappear */
-    nav a:not(:first-child), .dropdown {
-        display: none;
-    }
-
-    /* Make the hamburger icon visible (it's the :first-child of the nav) */
-    nav .icon {
-        float: right; /* Puts the icon on the far right */
-        display: block; /* Makes the icon visible */
-        color: white;
-        padding: 14px 16px; /* Match link padding */
-        text-align: center;
-        line-height: 1; /* Helps vertical alignment */
-        font-size: 24px;
-    }
-
-    /* 3. The 'responsive' state: When the user clicks the icon, JS adds this class */
-    nav.responsive {
-        position: relative; /* Keeps the nav in the document flow */
-    }
-
-    /* Make the links stack vertically in the responsive state */
-    nav.responsive a, nav.responsive .dropdown {
-        float: none;
-        display: block;
-        text-align: left;
-    }
-
-    /* Ensure the dropdown itself behaves correctly when responsive is active */
-    nav.responsive .dropdown {
-        width: 100%;
-    }
-
-    /* The button inside the dropdown needs to take full width */
-    nav.responsive .dropbtn {
-        width: 100%;
-        text-align: left;
-    }
-
-    /* Ensure the dropdown content is visible when the menu is open (responsive) */
-    nav.responsive .dropdown-content {
-        position: relative; /* Change from absolute to relative to keep it in the flow */
-    }
-}
-/* --- FIX 1: Fix Oversized Index Button / Logo --- */
-.nav-logo {
-    height: 30px; /* Set a reasonable height for the logo */
-    width: auto; /* Maintain aspect ratio */
-    vertical-align: middle; /* Helps align it nicely with the rest of the navigation */
-}
-.logo-link {
-    padding: 8px 16px; /* Adjust padding if needed, but the main fix is the image size */
-}
-
-
-/* --- FIX 2 & BONUS: Dropdown Styling --- */
-.dropdown {
-    float: left; /* Keep it in line with other nav links */
-    overflow: hidden;
-}
-
-.dropdown .dropbtn {
-    font-size: 16px;
-    border: none;
-    outline: none;
-    color: white; /* Text color for the button */
-    padding: 14px 16px;
-    background-color: inherit; /* Inherit the nav background */
-    font-family: inherit; /* Inherit font */
-    margin: 0;
-}
-
-/* Style for the links inside the dropdown */
-.dropdown-content {
-    display: none; /* Initially hide the dropdown content */
-    position: absolute;
-    background-color: #f9f9f9; /* Light background for the dropdown box */
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1; /* Ensure it appears above other content */
-}
-
-.dropdown-content a {
-    float: none;
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
-
-/* Change link color on hover inside the dropdown */
-.dropdown-content a:hover {
-    background-color: #ddd;
-}
-
-/* Show the dropdown menu when the parent .dropdown is hovered over */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-/* --- FIX 3: Hamburger Menu Styling (Refined) --- */
-
-/* Hide the icon by default on desktop view */
-nav .icon {
-    display: none;
-}
-
-/* Use a more standard breakpoint for mobile/responsive design */
-@media screen and (max-width: 768px) {
-    /* Hide all default links/dropdowns */
-    nav a:not(.logo-link):not(.icon), .dropdown {
-        display: none;
-    }
-
-    /* Make the hamburger icon visible and align it to the right */
-    nav .icon {
-        float: right;
-        display: block;
-        /* The image suggests a dark navigation bar, so the icon should be light */
-        color: white;
-        font-size: 24px;
-        padding: 10px 15px; /* Adjust padding to look nice */
-    }
-
-    /* Make the logo-link float left to balance the icon */
-    nav .logo-link {
-        float: left;
-    }
-
-    /* The 'responsive' state: When the user clicks the icon */
-    nav.responsive {
-        position: relative;
-    }
-
-    /* Display all elements vertically in the responsive state */
-    nav.responsive a, nav.responsive .dropdown {
-        float: none;
-        display: block;
-        text-align: left;
-    }
-
-    nav.responsive .dropbtn {
-        width: 100%;
-        text-align: left;
-    }
 }
