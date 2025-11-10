@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
 
         // --- Redirection Logic (FINAL, Simplified Dynamic Path) ---
         $host = $_SERVER['HTTP_HOST'];
-        $target_file = 'to-do.php';
+        $target_file = '';
         
         // Check if we are on the Osiris server
         if (strpos($host, 'osiris.ubishops.ca') !== false) {
