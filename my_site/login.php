@@ -2,48 +2,46 @@
 
 // PHP Script: Part 4 - Handles login attempt and verifies the hashed password.
 
-// 1. Correct hash for "CS203" using sha256.
+// The required password is "CS203"[cite: 54].
+// 1. Correct hash for "CS203" using sha256[cite: 99, 101, 106].
 $correct_hash = "b14e9015dae06b5e206c2b37178eac45e193792c5ccf1d48974552614c61f2ff";
 
 $error = '';
 
 
-// Check if the form was submitted via the POST method and the password field is set
+// Check if the form was submitted via the POST method and the password field is set[cite: 61, 62].
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
 
     $password_input = $_POST['password'];
 
-    // 2. Hash the user's input password for secure comparison
+    // 2. Hash the user's input password for secure comparison[cite: 97, 103, 106].
     $input_hash = hash("sha256", $password_input);
 
-    // 3. Verify if the entered password's hash matches the correct hash
+    // 3. Verify if the entered password's hash matches the correct hash[cite: 106].
     if ($input_hash === $correct_hash) {
 
-        // --- Redirection Logic (FINAL, Simplified Dynamic Path) ---
+        // --- Corrected Redirection Logic (Dynamic Path) ---
+        $target_file = 'to-do.php'; // The destination file[cite: 63].
         $host = $_SERVER['HTTP_HOST'];
-        $target_file = 'to-do.php';
+        $redirect_url = '';
         
-        // Check if we are on the Osiris server
+        // Check if we are on the Osiris server[cite: 79].
         if (strpos($host, 'osiris.ubishops.ca') !== false) {
-            // Case 2: Osiris/Web Server path - Use HTTPS and the full relative path
-            $protocol = 'https://';
-            // The path must include /~oraga/ and the subfolder /my_site/
-            $path_suffix = '/~oraga/my_site/to-do.php'; 
+            // Case 2: Osiris Server path (e.g., https://osiris.ubishops.ca/~oraga/my_site/to-do.php)
+            // Assumes files are in /~oraga/my_site/.
+            $redirect_url = 'https://' . $host . '/~oraga/my_site/' . $target_file; 
         } else {
-            // Case 1: Local XAMPP/LAMP setup - Use HTTP and the local repo name
-            $protocol = 'http://';
-            $path_suffix = '/ProfoundChill.github.io/';
+            // Case 1: Local XAMPP/LAMP setup (e.g., http://localhost/ProfoundChill.github.io/to-do.php)
+            // Replace 'ProfoundChill.github.io' with your project folder name if different on localhost.
+            $redirect_url = 'http://' . $host . '/ProfoundChill.github.io/' . $target_file;
         }
-
-        // Construct the full URL and Redirect
-        $BASE_URL = $protocol . $host . $path_suffix;
-        $redirect_url = $BASE_URL . $target_file;
         
+        // Redirect to the constructed URL[cite: 64, 84].
         header('Location: ' . $redirect_url);
-        exit(); // Crucial: Terminate the script after sending the header
+        exit(); // Crucial: Terminate the script after sending the header[cite: 91].
         
     } else {
-        // Set error message if the password comparison fails (incorrect password)
+        // Set error message if the password comparison fails (incorrect password)[cite: 92].
         $error = "The password is wrong.";
     }
 }
@@ -60,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
 <body>
     <div class="body_wrapper">
 
-        <?php require_once 'nav.php'; ?>
+        <?php require_once 'nav.php'; [cite_start]// Menu included with PHP[cite: 17, 18, 20, 56]. ?>
 
         <h1 class="form-title">Secure Login</h1>
 
@@ -80,4 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
         </div>
         
     </div>
-    <?php require_once 'footer.php'; ?>
+    <?php require_once 'footer.php'; [cite_start]// Footer included with PHP[cite: 21, 56]. ?>
+</body>
+</html>
