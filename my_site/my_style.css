@@ -8,7 +8,7 @@ html, body {
 }
 
 .body_wrapper {
-    box-sizing: border-sizing; 
+    /* Removed redundant box-sizing as it's already on html, body (Fix 1/6) */
     min-height: 100%; 
     display: flex;
     flex-direction: column;
@@ -30,6 +30,15 @@ footer {
     width: 100%; 
 }
 
+/* Added specific styling for links in the footer, as global a:link (#333) makes them invisible (Fix 3/6) */
+footer a, footer a:visited {
+    color: #fdc397; /* Bright, visible link color */
+}
+footer a:hover {
+    color: white; /* Brighter on hover */
+    text-decoration: underline;
+}
+
 /*
  * Part 1: Hyperlinks Styling
  */
@@ -39,7 +48,8 @@ a:link {
 }
 
 a:visited {
-    color: #fdfdfd; 
+    /* Changed color from #fdfdfd (white) to a visible dark grey to ensure contrast on light backgrounds (Fix 2/6) */
+    color: #5A5A5A; 
     text-decoration: none;
 }
 
@@ -306,20 +316,21 @@ input[type="text"], input[type="email"], input[type="number"], textarea, select 
     color: white;
 }
 
-/* * --- Dropdown Menu Styling (FIXED FOR HOVER) --- 
+/* * --- Dropdown Menu Styling --- 
  */
 
 /* 1. The Container */
 .dropdown {
     position: relative;
-    display: inline-block;  
+    display: inline-block; 
 }
 
 /* 2. The Button */
 .dropbtn {
     background-color: transparent;
     color: white;
-    padding: 14px 16px;
+    /* Adjusted padding to match nav a (10px 15px) for consistent vertical alignment in the navbar (Fix 4/6) */
+    padding: 10px 15px; 
     font-size: 16px;
     font-weight: bold;
     border: none;
@@ -335,7 +346,7 @@ input[type="text"], input[type="email"], input[type="number"], textarea, select 
 
 /* 3. The Content: HIDES the submenu by default */
 .dropdown-content {
-    display: none; /* Hides the menu until hover */
+    display: none; /* Hides the menu until 'show' class is added by JS */
     position: absolute; 
     background-color: #333333; 
     min-width: 180px;
@@ -357,10 +368,14 @@ input[type="text"], input[type="email"], input[type="number"], textarea, select 
     background-color: #9A031E; 
 }
 
-/* 6. The Magic: SHOWS the dropdown content when hovering over the parent */
-.dropdown:hover .dropdown-content {
+/* 6. NEW: Class to be toggled by JavaScript (Required by image) (Fix 6/6) */
+.show {
     display: block;
 }
+
+/* 7. REMOVED the old hover-based visibility rule, as requested by the image, to enable JavaScript control (Fix 5/6) */
+/* .dropdown:hover .dropdown-content { display: block; } */
+
 
 /* * --- Mobile/Responsive Navigation Styles --- 
  */
