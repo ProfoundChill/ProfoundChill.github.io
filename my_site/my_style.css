@@ -1,15 +1,16 @@
 /*
  * Part 2: Sticky Footer Setup
+ * This ensures the footer sticks to the bottom, even on short pages.
  */
 html, body {
-    box-sizing: border-box; 
+    box-sizing: border-box; /* sizing the box's border*/
     height: 100%;
-    margin: 0; 
+    margin: 0; /* Removing default body margin */
 }
 
 .body_wrapper {
-    /* Removed redundant box-sizing as it's already on html, body (Fix 1/6) */
-    min-height: 100%; 
+    box-sizing: border-box; /* sizing the box's border*/
+    min-height: 100%; /* setting the min height  */
     display: flex;
     flex-direction: column;
 }
@@ -18,55 +19,48 @@ html, body {
  * Part 2: Footer Styling
  */
 footer {
-    background-color: #333333; 
-    color: white; 
-    height: 40px; 
-    padding: 0 15px; 
-    margin-top: auto; 
+    background-color: #333333; /* Dark gray background  */
+    color: white; /* White text color  */
+    height: 40px; /* Set a height  */
+    padding: 0 15px; /* Add some horizontal padding */
+    margin-top: auto; /* Pushes the footer to the bottom of the flex container */
+
+    /* Centering the text vertically  */
     display: flex;
-    align-items: center; 
+    align-items: center; /* Vertically centers the content */
+
     font-size: 0.9em;
     text-align: center;
-    width: 100%; 
-}
-
-/* Added specific styling for links in the footer, as global a:link (#333) makes them invisible (Fix 3/6) */
-footer a, footer a:visited {
-    color: #fdc397; /* Bright, visible link color */
-}
-footer a:hover {
-    color: white; /* Brighter on hover */
-    text-decoration: underline;
+    width: 100%; /* Ensure it spans full width */
 }
 
 /*
  * Part 1: Hyperlinks Styling
  */
 a:link {
-    color: #333; 
-    text-decoration: none; 
+    color: #333; /* Before any action  */
+    text-decoration: none; /* Removed the  underline for a cleaner look */
 }
 
 a:visited {
-    /* Changed color from #fdfdfd (white) to a visible dark grey to ensure contrast on light backgrounds (Fix 2/6) */
-    color: #5A5A5A; 
+    color: #fdfdfd; /* After clicking its white */
     text-decoration: none;
 }
 
 a:hover {
-    color: #fdc397; 
-    text-decoration: underline; 
+    color: #fdc397; /* When hovered its like a sking color*/
+    text-decoration: underline; /* Add underline back on hover */
 }
 
 a:active {
-    color: #dc3545; 
+    color: #dc3545; /* While being clicked it hovers red */
 }
 
 /*
  * Part 3: The Navigation Menu Styling
  */
 nav {
-    background-color: #2E8B57; 
+    background-color: #2E8B57; /* A nice forest green */
     padding: 10px 0;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -78,22 +72,22 @@ nav a {
     padding: 10px 15px;
     margin: 0 5px;
     border-radius: 5px;
-    display: inline-block; 
+    display: inline-block; /* Allows spacing and styling */
 }
 
 nav a:hover {
-    background-color: #3CB371; 
-    text-decoration: none; 
+    background-color: #3CB371; /* Lighter green on hover */
+    text-decoration: none; /* Keep underline off the nav links */
 }
 
 /* Highlight for the current page  */
 .current-page {
-    background-color: #1e6c40; 
+    background-color: #1e6c40; /* Darker green to highlight */
     font-weight: bold;
 }
 
 /*
- * Additional Styles (Tables/Forms/Headers)
+ * Additional Styles (Moved from index.html)
  */
 h3 {
     color: rgb(93, 62, 172);
@@ -127,53 +121,64 @@ td:nth-child(3) {
 
 /*
  * Part 4: The Scrollbar Styling
+ * (Uses WebKit prefixes for most browser support)
  */
+
+/* Width of the scrollbar */
 ::-webkit-scrollbar {
     width: 10px;
 }
 
+/* Track (the area on which the thumb scrolls) */
 ::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
 
+/* Handle (the draggable part of the scrollbar) */
 ::-webkit-scrollbar-thumb {
-    background: #5e5e5e; 
+    background: #5e5e5e; /* Darker gray for visibility */
     border-radius: 5px;
 }
 
+/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #333; 
+    background: #333; /* Even darker gray on hover */
 }
 
 /*
  * Styles for the Main Page (index.html)
  */
+
+/* Add a subtle background to the body for a more modern feel */
 body {
     background-color: #f4f4f9;
 }
 
+/* Style for the main page headers to center them */
 h1, h2 {
     text-align: center;
     color: #333;
 }
 
+/* This styles the main h1 to look like the one on your artistic-self page */
 h1 {
-    background-color: rgba(46, 139, 87, 0.8); 
+    background-color: rgba(46, 139, 87, 0.8); /* Semi-transparent nav green */
     color: white;
     padding: 20px;
     border-radius: 10px;
     max-width: 800px;
-    margin: 20px auto; 
+    margin: 20px auto; /* Centers the heading block */
     text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
 }
 
+/* This creates the 'card' effect for each section on the main page */
 .content-box {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    max-width: 800px; 
-    margin: 30px auto; 
+    max-width: 800px; /* Limits the width for readability */
+    margin: 30px auto; /* Adds space between boxes and centers them */
     color: #333;
     line-height: 1.6;
 }
@@ -182,9 +187,9 @@ h1 {
  * Styles for the Marketplace Page
  */
 .marketplace-content {
-    max-width: 800px; 
-    margin: 30px auto; 
-    text-align: center; 
+    max-width: 800px; /* Limits the width */
+    margin: 30px auto; /* Centers the block on the page */
+    text-align: center; /* Centers all the text inside */
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -194,7 +199,7 @@ h1 {
  * Styles for the My Quiz Form Page (my_form.html)
  */
 .form-content {
-    background-color: #ffc399; 
+    background-color: #ffc399; /* Your specified orange/skin color */
     max-width: 600px;
     margin: 40px auto;
     padding: 30px;
@@ -204,7 +209,7 @@ h1 {
 }
 
 fieldset {
-    border: 3px solid #FFD700; 
+    border: 3px solid #FFD700; /* Gold border for a "quiz card" look */
     padding: 20px;
     border-radius: 10px;
 }
@@ -214,13 +219,15 @@ legend {
     font-weight: bold;
     color: #9A031E;
     padding: 0 10px;
+    /* Unique touch: Add a small icon next to the legend */
 }
 
 legend::before {
-    content: "💎 "; 
+    content: "💎 "; /* A diamond icon for a stylish quiz title */
     font-size: 1.2em;
 }
 
+/* Style the text inputs and textarea */
 input[type="text"], input[type="email"], input[type="number"], textarea, select {
     width: 98%;
     padding: 8px;
@@ -231,14 +238,14 @@ input[type="text"], input[type="email"], input[type="number"], textarea, select 
 }
 
 .submit-button {
-    background-color: #004E89; 
+    background-color: #004E89; /* Dark blue button */
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1.1em;
-    float: right; 
+    float: right; /* Keeps it on the right side */
     margin-top: 20px;
 }
 
@@ -246,6 +253,7 @@ input[type="text"], input[type="email"], input[type="number"], textarea, select 
     background-color: #007bff;
 }
 
+/* Clearfix to contain the floated submit button */
 .form-content::after {
     content: "";
     display: table;
@@ -253,139 +261,260 @@ input[type="text"], input[type="email"], input[type="number"], textarea, select 
 }
 
 /*
- * Styles for the Slideshow Carousel
+ * New Styles for the Slideshow Carousel (to make it bigger and overlay navigation)
  */
 .slideshow {
-    max-width: 600px; 
-    margin: 20px auto; 
-    position: relative; 
+    /* Set a max width for the whole carousel to make it bigger */
+    max-width: 600px; /* Adjust this value to control the maximum size */
+    margin: 20px auto; /* Center the slideshow on the page */
+    position: relative; /* **Key:** Establishes a positioning context for the prev/next links */
     overflow: hidden;
-    border-radius: 10px; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); 
+    border-radius: 10px; /* Nicer: Add rounded corners to the carousel frame */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Nicer: Add a prominent shadow */
 }
 
+/* Ensure images fill their container */
 .slideshow_img img {
     width: 100%;
-    display: block; 
+    display: block; /* Removes any extra space below the image */
     height: auto;
 }
 
+/* Style and position the navigation links OVER the image */
 .prev-link, .next-link {
     cursor: pointer;
-    position: absolute; 
-    top: 50%; 
-    transform: translateY(-50%); 
+    position: absolute; /* **Key:** Position them over the picture */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for perfect vertical centering */
     padding: 16px;
-    color: white; 
+    color: white; /* Text color for the controls */
     font-weight: bold;
     font-size: 20px;
     transition: 0.6s ease;
     user-select: none;
-    background-color: rgba(0, 0, 0, 0.5); 
-    z-index: 10; 
-    text-decoration: none; 
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    z-index: 10; /* Ensure they are above the image */
+    text-decoration: none; /* Remove underline */
 }
 
+/* Position the 'previous' link on the left */
 .prev-link {
     left: 0;
     border-radius: 0 4px 4px 0;
 }
 
+/* Position the 'next' link on the right */
 .next-link {
     right: 0;
     border-radius: 4px 0 0 4px;
 }
 
+/* Hover effect for the controls */
 .prev-link:hover, .next-link:hover {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
 /* Styling for the Logo Image */
 .nav-logo {
+    /* Set a specific, small height for the logo */
     height: 30px;
-    width: auto; 
-    vertical-align: middle; 
+    width: auto; /* Maintain aspect ratio */
+    vertical-align: middle; /* Aligns the image nicely with the text links */
+    /* Remove any default link styling from the image */
+    border: none;
+    padding: 0;
+    margin: 0;
 }
 
+/* Ensure the link container is treated like a regular navigation item */
 .logo-link {
+    /* Set the padding on the image link (where it used to be on the text) */
     padding: 10px 15px;
 }
 
+/* Optional: Make the logo link hover/active state look the same as the others */
 .logo-link:hover, .logo-link.current-page {
-    background-color: #3CB371; 
+    /* Use the same background/color as your other nav links */
+    background-color: #9A031E;
     color: white;
 }
+/* --- Dropdown Menu Styling --- */
 
-/* * --- Dropdown Menu Styling --- 
- */
-
-/* 1. The Container */
+/* 1. The Container: Needs position: relative for the content to be absolute inside it */
 .dropdown {
     position: relative;
-    display: inline-block; 
+    display: inline-block; /* Makes it behave like a normal nav item */
+    height: 100%; /* Important to match the height of the nav bar */
 }
 
-/* 2. The Button */
+/* 2. The Button: Styles the clickable 'Discover me!' text to look like a normal nav link */
 .dropbtn {
-    background-color: transparent;
+    background-color: transparent; /* Makes the background match the nav bar */
     color: white;
-    /* Adjusted padding to match nav a (10px 15px) for consistent vertical alignment in the navbar (Fix 4/6) */
-    padding: 10px 15px; 
+    padding: 14px 16px; /* Match the padding of your other nav links */
     font-size: 16px;
     font-weight: bold;
     border: none;
     cursor: pointer;
-    display: block;
+    height: 100%; /* Match the height of the nav bar */
+    display: block; /* Allows full height to be clickable */
+    /* Ensure the button text matches the link font/style */
     font-family: inherit;
+    /* The arrow (&#9660;) is added with HTML/CSS. This is just a nice-looking button. */
 }
 
-/* Optional: Add a hover color to the button */
-.dropdown:hover .dropbtn {
-    background-color: #3CB371; 
-}
-
-/* 3. The Content: HIDES the submenu by default */
+/* 3. The Content: Hidden by default, absolute position to float over the page */
 .dropdown-content {
-    display: none; /* Hides the menu until 'show' class is added by JS */
-    position: absolute; 
-    background-color: #333333; 
+    display: none; /* CRITICAL: Hides the menu initially */
+    position: absolute; /* Floats over the rest of the content */
+    background-color: #333333; /* Dark background for the menu itself */
     min-width: 180px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 10; 
+    z-index: 10; /* Ensures it sits above other page content */
 }
 
-/* 4. Dropdown Links */
+/* 4. Dropdown Links: Style the links inside the menu */
 .dropdown-content a {
     color: white;
     padding: 12px 16px;
     text-decoration: none;
-    display: block; 
-    text-align: left; 
+    display: block; /* Makes each link take up the full width */
+    text-align: left; /* Aligns the text left for a standard drop-down */
 }
 
 /* 5. Hover Effects: Changes color when hovering over the links */
 .dropdown-content a:hover {
-    background-color: #9A031E; 
+    background-color: #9A031E; /* Use your existing hover color */
 }
 
-/* 6. NEW: Class to be toggled by JavaScript (Required by image) (Fix 6/6) */
-.show {
-    display: block;
+/* 6. The Magic: Show the dropdown content when hovering over the main .dropdown container */
+.dropdown:hover .dropdown-content {
+    display: block; /* CRITICAL: Shows the content when the mouse is over the container */
 }
 
-/* 7. REMOVED the old hover-based visibility rule, as requested by the image, to enable JavaScript control (Fix 5/6) */
-/* .dropdown:hover .dropdown-content { display: block; } */
-
-
-/* * --- Mobile/Responsive Navigation Styles --- 
- */
+/* Optional: Add a hover color to the button too */
+.dropdown:hover .dropbtn {
+    background-color: #9A031E;
+}
+/* --- Mobile/Responsive Navigation Styles --- */
 
 /* 1. Hamburger Icon: Hide it by default (desktop view) */
 .icon {
     display: none;
 }
 
-/* 2. Media Query: Styles that only apply when the screen width is 768px or less */
+/* 2. Media Query: Styles that only apply when the screen width is 200px or less */
+@media screen and (max-width: 200px) {
+
+    /* Make all default links/dropdowns disappear */
+    nav a:not(:first-child), .dropdown {
+        display: none;
+    }
+
+    /* Make the hamburger icon visible (it's the :first-child of the nav) */
+    nav .icon {
+        float: right; /* Puts the icon on the far right */
+        display: block; /* Makes the icon visible */
+        color: white;
+        padding: 14px 16px; /* Match link padding */
+        text-align: center;
+        line-height: 1; /* Helps vertical alignment */
+        font-size: 24px;
+    }
+
+    /* 3. The 'responsive' state: When the user clicks the icon, JS adds this class */
+    nav.responsive {
+        position: relative; /* Keeps the nav in the document flow */
+    }
+
+    /* Make the links stack vertically in the responsive state */
+    nav.responsive a, nav.responsive .dropdown {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+
+    /* Ensure the dropdown itself behaves correctly when responsive is active */
+    nav.responsive .dropdown {
+        width: 100%;
+    }
+
+    /* The button inside the dropdown needs to take full width */
+    nav.responsive .dropbtn {
+        width: 100%;
+        text-align: left;
+    }
+
+    /* Ensure the dropdown content is visible when the menu is open (responsive) */
+    nav.responsive .dropdown-content {
+        position: relative; /* Change from absolute to relative to keep it in the flow */
+    }
+}
+/* --- FIX 1: Fix Oversized Index Button / Logo --- */
+.nav-logo {
+    height: 30px; /* Set a reasonable height for the logo */
+    width: auto; /* Maintain aspect ratio */
+    vertical-align: middle; /* Helps align it nicely with the rest of the navigation */
+}
+.logo-link {
+    padding: 8px 16px; /* Adjust padding if needed, but the main fix is the image size */
+}
+
+
+/* --- FIX 2 & BONUS: Dropdown Styling --- */
+.dropdown {
+    float: left; /* Keep it in line with other nav links */
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white; /* Text color for the button */
+    padding: 14px 16px;
+    background-color: inherit; /* Inherit the nav background */
+    font-family: inherit; /* Inherit font */
+    margin: 0;
+}
+
+/* Style for the links inside the dropdown */
+.dropdown-content {
+    display: none; /* Initially hide the dropdown content */
+    position: absolute;
+    background-color: #f9f9f9; /* Light background for the dropdown box */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1; /* Ensure it appears above other content */
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+/* Change link color on hover inside the dropdown */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Show the dropdown menu when the parent .dropdown is hovered over */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* --- FIX 3: Hamburger Menu Styling (Refined) --- */
+
+/* Hide the icon by default on desktop view */
+nav .icon {
+    display: none;
+}
+
+/* Use a more standard breakpoint for mobile/responsive design */
 @media screen and (max-width: 768px) {
     /* Hide all default links/dropdowns */
     nav a:not(.logo-link):not(.icon), .dropdown {
@@ -396,9 +525,10 @@ input[type="text"], input[type="email"], input[type="number"], textarea, select 
     nav .icon {
         float: right;
         display: block;
+        /* The image suggests a dark navigation bar, so the icon should be light */
         color: white;
         font-size: 24px;
-        padding: 10px 15px; 
+        padding: 10px 15px; /* Adjust padding to look nice */
     }
 
     /* Make the logo-link float left to balance the icon */
