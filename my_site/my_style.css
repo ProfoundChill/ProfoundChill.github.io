@@ -1,66 +1,67 @@
+/* Fix 3: Set box-sizing globally for consistency and robustness */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 /*
  * Part 2: Sticky Footer Setup
- * This ensures the footer sticks to the bottom, even on short pages.
  */
 html, body {
-    box-sizing: border-box; /* sizing the box's border*/
-    height: 100%;  
-    margin: 0; /* Removing default body margin */
+    /* box-sizing: border-box; <-- Redundant after global fix */
+    height: 100%;
+    margin: 0;
 }
 
 .body_wrapper {
-    box-sizing: border-box; /* sizing the box's border*/
-    min-height: 100%; /* setting the min height  */
-    display: flex; 
-    flex-direction: column; 
+    box-sizing: border-box;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 /*
  * Part 2: Footer Styling
  */
 footer {
-    background-color: #333333; /* Dark gray background  */
-    color: white; /* White text color  */
-    height: 40px; /* Set a height  */
-    padding: 0 15px; /* Add some horizontal padding */
-    margin-top: auto; /* Pushes the footer to the bottom of the flex container */
-
-    /* Centering the text vertically  */
+    background-color: #333333;
+    color: white;
+    height: 40px;
+    padding: 0 15px;
+    margin-top: auto;
     display: flex;
-    align-items: center; /* Vertically centers the content */
-
+    align-items: center;
     font-size: 0.9em;
     text-align: center;
-    width: 100%; /* Ensure it spans full width */
+    width: 100%;
 }
 
 /*
  * Part 1: Hyperlinks Styling
  */
 a:link {
-    color: #333; /* Before any action  */
-    text-decoration: none; /* Removed the  underline for a cleaner look */
+    color: #333;
+    text-decoration: none;
 }
 
 a:visited {
-    color: #fdfdfd; /* After clicking its white */
+    color: #555577; /* Fix 2: Changed from #fdfdfd (white) to a darker color for contrast/accessibility */
     text-decoration: none;
 }
 
 a:hover {
-    color: #fdc397; /* When hovered its like a sking color*/
-    text-decoration: underline; /* Add underline back on hover */
+    color: #fdc397;
+    text-decoration: underline;
 }
 
 a:active {
-    color: #dc3545; /* While being clicked it hovers red */
+    color: #dc3545;
 }
 
 /*
  * Part 3: The Navigation Menu Styling
  */
 nav {
-    background-color: #2E8B57; /* A nice forest green */
+    background-color: #2E8B57;
     padding: 10px 0;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -72,37 +73,42 @@ nav a {
     padding: 10px 15px;
     margin: 0 5px;
     border-radius: 5px;
-    display: inline-block; /* Allows spacing and styling */
+    display: inline-block;
 }
 
 nav a:hover {
-    background-color: #3CB371; /* Lighter green on hover */
-    text-decoration: none; /* Keep underline off the nav links */
+    background-color: #3CB371;
+    text-decoration: none;
 }
 
 /* Highlight for the current page  */
 .current-page {
-    background-color: #1e6c40; /* Darker green to highlight */
+    background-color: #1e6c40;
     font-weight: bold;
 }
 
+.current-page:hover {
+    background-color: #1a5834; /* Fix 6: Added a specific hover style to maintain distinct "current page" look */
+    cursor: default;
+}
+
 /*
- * Additional Styles (Moved from index.html)
+ * Additional Styles (Tables/Forms/Headers)
  */
 h3 {
-    color: rgb(93, 62, 172); 
+    color: rgb(93, 62, 172);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    font-family: Georgia, serif; 
-    font-size: 0.9em; 
+    font-family: Georgia, serif;
+    font-size: 0.9em;
 }
 
 th {
     color: rgb(64, 11, 150);
-    padding: 1em; 
+    padding: 1em;
     font-family: Arial, sans-serif;
     background-color: #e6f3ff;
 }
@@ -121,64 +127,53 @@ td:nth-child(3) {
 
 /*
  * Part 4: The Scrollbar Styling
- * (Uses WebKit prefixes for most browser support)
  */
-
-/* Width of the scrollbar */
 ::-webkit-scrollbar {
     width: 10px;
 }
 
-/* Track (the area on which the thumb scrolls) */
 ::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
 
-/* Handle (the draggable part of the scrollbar) */
 ::-webkit-scrollbar-thumb {
-    background: #5e5e5e; /* Darker gray for visibility */
+    background: #5e5e5e;
     border-radius: 5px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #333; /* Even darker gray on hover */
+    background: #333;
 }
 
 /*
  * Styles for the Main Page (index.html)
  */
-
-/* Add a subtle background to the body for a more modern feel */
 body {
     background-color: #f4f4f9;
 }
 
-/* Style for the main page headers to center them */
 h1, h2 {
     text-align: center;
     color: #333;
 }
 
-/* This styles the main h1 to look like the one on your artistic-self page */
 h1 {
-    background-color: rgba(46, 139, 87, 0.8); /* Semi-transparent nav green */
+    background-color: rgba(46, 139, 87, 0.8);
     color: white;
     padding: 20px;
     border-radius: 10px;
     max-width: 800px;
-    margin: 20px auto; /* Centers the heading block */
+    margin: 20px auto;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
 }
 
-/* This creates the 'card' effect for each section on the main page */
 .content-box {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    max-width: 800px; /* Limits the width for readability */
-    margin: 30px auto; /* Adds space between boxes and centers them */
+    max-width: 800px;
+    margin: 30px auto;
     color: #333;
     line-height: 1.6;
 }
@@ -187,9 +182,9 @@ h1 {
  * Styles for the Marketplace Page
  */
 .marketplace-content {
-    max-width: 800px; /* Limits the width */
-    margin: 30px auto; /* Centers the block on the page */
-    text-align: center; /* Centers all the text inside */
+    max-width: 800px;
+    margin: 30px auto;
+    text-align: center;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -199,7 +194,7 @@ h1 {
  * Styles for the My Quiz Form Page (my_form.html)
  */
 .form-content {
-    background-color: #ffc399; /* Your specified orange/skin color */
+    background-color: #ffc399;
     max-width: 600px;
     margin: 40px auto;
     padding: 30px;
@@ -209,7 +204,7 @@ h1 {
 }
 
 fieldset {
-    border: 3px solid #FFD700; /* Gold border for a "quiz card" look */
+    border: 3px solid #FFD700;
     padding: 20px;
     border-radius: 10px;
 }
@@ -219,17 +214,15 @@ legend {
     font-weight: bold;
     color: #9A031E;
     padding: 0 10px;
-    /* Unique touch: Add a small icon next to the legend */
 }
 
 legend::before {
-    content: "💎 "; /* A diamond icon for a stylish quiz title */
+    content: "💎 ";
     font-size: 1.2em;
 }
 
-/* Style the text inputs and textarea */
 input[type="text"], input[type="email"], input[type="number"], textarea, select {
-    width: 98%;
+    width: 100%; /* Fix 5: Changed from 98% to 100% since box-sizing is set to border-box */
     padding: 8px;
     margin-top: 5px;
     border: 1px solid #ccc;
@@ -238,14 +231,14 @@ input[type="text"], input[type="email"], input[type="number"], textarea, select 
 }
 
 .submit-button {
-    background-color: #004E89; /* Dark blue button */
+    background-color: #004E89;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1.1em;
-    float: right; /* Keeps it on the right side */
+    float: right;
     margin-top: 20px;
 }
 
@@ -253,9 +246,184 @@ input[type="text"], input[type="email"], input[type="number"], textarea, select 
     background-color: #007bff;
 }
 
-/* Clearfix to contain the floated submit button */
 .form-content::after {
     content: "";
     display: table;
     clear: both;
+}
+
+/*
+ * Styles for the Slideshow Carousel
+ */
+.slideshow {
+    max-width: 600px;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.slideshow_img img {
+    width: 100%;
+    display: block;
+    height: auto;
+}
+
+.prev-link, .next-link {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.6s ease;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    text-decoration: none;
+}
+
+.prev-link {
+    left: 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.next-link {
+    right: 0;
+    border-radius: 4px 0 0 4px;
+}
+
+.prev-link:hover, .next-link:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Styling for the Logo Image */
+.nav-logo {
+    height: 30px;
+    width: auto;
+    vertical-align: middle;
+}
+
+.logo-link {
+    padding: 10px 15px;
+}
+
+.logo-link:hover, .logo-link.current-page {
+    background-color: #3CB371;
+    color: white;
+}
+
+/* * --- Dropdown Menu Styling ---
+ */
+
+/* 1. The Container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* 2. The Button */
+.dropbtn {
+    background-color: transparent;
+    color: white;
+    padding: 10px 15px; /* Fix 4: Changed from 14px 16px to match nav a vertical padding (10px) */
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    display: block;
+    font-family: inherit;
+}
+
+/* Optional: Add a hover color to the button */
+.dropdown:hover .dropbtn {
+    background-color: #3CB371;
+}
+
+/* 3. The Content: HIDES the submenu by default */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333333;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+/* Fix 1: Rule to show content on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* 4. Dropdown Links */
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+/* 5. Hover Effects: Changes color when hovering over the links */
+.dropdown-content a:hover {
+    background-color: #9A031E;
+}
+
+.show {
+    display: block;
+}
+
+/* * --- Mobile/Responsive Navigation Styles ---
+ */
+
+/* 1. Hamburger Icon: Hide it by default (desktop view) */
+.icon {
+    display: none;
+}
+
+/* 2. Media Query: Styles that only apply when the screen width is 768px or less */
+@media screen and (max-width: 768px) {
+    /* Hide all default links/dropdowns */
+    nav a:not(.logo-link):not(.icon), .dropdown {
+        display: none;
+    }
+
+    /* Make the hamburger icon visible and align it to the right */
+    nav .icon {
+        float: right;
+        display: block;
+        color: white;
+        font-size: 24px;
+        padding: 10px 15px;
+    }
+
+    /* Make the logo-link float left to balance the icon */
+    nav .logo-link {
+        float: left;
+    }
+
+    /* The 'responsive' state: When the user clicks the icon */
+    nav.responsive {
+        position: relative;
+    }
+
+    /* Display all elements vertically in the responsive state */
+    nav.responsive a, nav.responsive .dropdown {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    
+    /* FIX: When in responsive mode, the dropdown content must stack normally, not absolutely positioned */
+    nav.responsive .dropdown-content {
+        position: static; 
+    }
+
+    nav.responsive .dropbtn {
+        width: 100%;
+        text-align: left;
+    }
 }

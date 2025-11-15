@@ -7,17 +7,11 @@
     <link rel="stylesheet" href="my_style.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
-    <script src="nav.js"></script>
 </head>
 <body>
     <div class="body_wrapper">
         
-        <nav id="main-nav"></nav>
-        <script>
-            // Calls the setNav function to build the navigation and highlight the current page
-            setNav(location.pathname); 
-        </script>
+        <?php require_once 'nav.php'; ?>
 
         <h1>My To-Do List</h1>
         
@@ -32,11 +26,12 @@
         <div class="content-box">
             <h2>My To-Do list this week!</h2>
             <ul id="todo-list-container">
-                </ul>
+            </ul>
         </div>
         
     </div>
-    <footer>This website is made for CS203 labs!</footer>
-    <script src="todo.js"></script> 
+  
+    <?php require_once 'footer.php'; ?>
+    
 </body>
 </html>
