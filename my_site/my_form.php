@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Quiz Form</title>
     <link rel="stylesheet" href="my_style.css">
-    </head>
+    <script src="2-form-validation.js"></script> 
+</head>
 <body>
     <div class="body_wrapper">
         
@@ -15,7 +16,7 @@
 
         <div class="form-content">
             
-            <form action="quiz_verification.php" method="GET"> 
+            <form id="quiz-form" action="quiz_verification.php" method="GET" onsubmit="return validate(event)"> 
                 
                 <fieldset>
                     <legend>Which type are you?</legend> 
@@ -79,3 +80,5 @@
         
     </div>
     <?php require_once 'footer.php'; ?>
+</body>
+</html>
