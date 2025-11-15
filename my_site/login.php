@@ -1,5 +1,8 @@
 <?php
 // login.php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 // 1. Mandatory Session and Configuration Setup (Part 3/Deployment Fix)
 require_once 'config.php'; 
