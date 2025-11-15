@@ -1,10 +1,6 @@
-# .htaccess (In the Root Directory, NOT in my_site/)
+# .htaccess 
 
-# 1. Block direct public access to sensitive files (REQUIRED for Part 4)
 <Files "login_attempts.json">
     Order allow,deny
     Deny from all
 </Files>
-
-# 2. MANDATORY FIX: This file intentionally excludes 'Options -Indexes' 
-#    to fix the Osiris Forbidden Access error.

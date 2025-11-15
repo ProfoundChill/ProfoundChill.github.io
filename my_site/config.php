@@ -1,9 +1,8 @@
 <?php
-// my_site/config.php
 
-// MANDATORY FIX: The session path setting has been REMOVED
-// to ensure session files are written to the default, functional /tmp path on Osiris[cite: 115, 117].
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-// Start the session required for Part 3
 session_start();
 ?>

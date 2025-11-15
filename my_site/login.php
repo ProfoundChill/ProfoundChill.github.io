@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
 <body>
     <div class="body_wrapper">
 
-        <?php require_once 'nav.php'; // VIEW Section begins ?>
+        <?php require_once 'nav.php'; ?>
 
         <h1 class="form-title">Secure Login</h1>
 
