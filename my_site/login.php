@@ -15,7 +15,7 @@ $message = '';
 $LOCKOUT_DURATION = 30; // Lockout time in seconds (as per instructions)
 $MAX_ATTEMPTS = 3;     // Max failed attempts allowed
 // Path to the attempts file (must be outside my_site/ to use ../)
-$attempts_file = '/tmp/login_attempts.json'; 
+$attempts_file = '/login_attempts.json'; 
 
 // Initialize $user_data early for the VIEW section checks
 $user_data = ['attempts' => 0, 'locked_until' => 0];
