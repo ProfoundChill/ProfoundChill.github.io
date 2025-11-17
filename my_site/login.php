@@ -1,9 +1,5 @@
 <?php
 
-// =================================================================
-// 🚨 MODEL SECTION (Part 3 Updates)
-// =================================================================
-
 // 1. Mandatory Session and Configuration Setup
 require_once 'config.php'; // Includes session_start() [cite: 55, 56]
 
@@ -77,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
 
         <div class="form-content">
             
-            [cite_start]<?php if (!empty($message)): // Display success message if logged out[cite: 73]?>
+           <?php if (!empty($message)): // Display success message if logged out[cite: 73]?>
                 <h2 style="color: black; margin-bottom: 5px;">
                     <?php echo $message; ?>
                 </h2>
