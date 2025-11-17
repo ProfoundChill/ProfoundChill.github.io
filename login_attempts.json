@@ -1,6 +1,6 @@
 {
     "user123": {
-        "attempts": 1,
+        "attempts": 0,
         "locked_until": 0
     },
     "guest_user": {
