@@ -10,7 +10,7 @@ function redirect(string $target_file) {
     // Use the logic from your original file, ensuring it terminates the script
     $host = $_SERVER['HTTP_HOST'];
     $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
-    $path_suffix = strpos($host, 'osiris.ubishops.ca') !== false ? '/~yourusername/my_site/' : '/'; 
+    $path_suffix = strpos($host, 'osiris.ubishops.ca') !== false ? '/~oraga/my_site/' : '/'; 
     $redirect_url = $protocol . $host . $path_suffix . $target_file;
     header('Location: ' . $redirect_url);
     exit(); 
