@@ -19,18 +19,17 @@ if (isset($_COOKIE['todo-username'])) {
 }
 
 // 4. Part 3: Handle Logout Request (Before any other checks)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) { // Checking for 'logout' signal
-    session_destroy(); // Destroys the existing session 
-    session_start();   // Starts a new session immediately 
-    $message = "Successfully logged out..."; // Display confirmation message 
-    // Note: Cookie (username) intentionally remains for pre-filling the form.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) { 
+    session_destroy(); 
+    session_start();   
+    $message = "Successfully logged out...";
 } 
 // 5. Part 3: Check If User is Already Logged In
 else if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true) {
-    // If user is already logged in via session, skip password check and redirect 
     header('Location: to-do.php');
     exit();
 }
+
 
 // 6. Part 3 & 4: Handle Login Attempt
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['username'])) {
@@ -40,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
     $input_hash = hash("sha256", $password_input);
 
     // --- Part 4.3a: Load the file's data. Else, set $attempts to an empty array. ---
-    // // Load existing attempts (if file exists)
     if (file_exists($file)) {
         $attempts = json_decode(file_get_contents($file), true);
     } else {
@@ -57,50 +55,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
 
     // --- Part 4.7: Before verifying the password, check if that user is locked out: ---
     $current_time = time();
-    $user_attempts = &$attempts[$username_input]; // Use reference for easier updating
+    $user_attempts = &$attempts[$username_input]; 
 
     if ($user_attempts['locked_until'] > $current_time) {
         $remaining_time = $user_attempts['locked_until'] - $current_time;
+        // THIS IS THE SPECIFIC MESSAGE FOR LOCKOUT
         $error = "Locked out, sorry. Remaining time: {$remaining_time}";
 
         // --- Part 4.8: Save back all values in the file (even if locked out) ---
-        // Although the data hasn't changed here, we follow the instruction.
         file_put_contents($file, json_encode($attempts)); 
-        // Note: The logic exits here if locked out.
         
     } else {
         // --- Not locked out: proceed to password verification ---
 
-        // Verify if the entered password's hash matches the correct hash
         if ($input_hash === $correct_hash) {
             
             // Successful Login: Reset attempts for this user
             $user_attempts['attempts'] = 0;
             $user_attempts['locked_until'] = 0; 
             
-            // Set session variable to true 
             $_SESSION['is_logged_in'] = true; 
-            
-            // Part 2.2: Successful Login - Create "todo-username" Cookie
             setcookie('todo-username', $username_input, time() + (86400 * 30), "/");
 
-            // Redirection Logic
             header('Location: to-do.php');
             exit();
             
         } else {
             // Wrong password logic
 
-            // --- Part 4.5: When you check the password, if it is wrong, add 1 to that user's value: ---
+            // --- Part 4.5: Add 1 to that user's value: ---
             $user_attempts['attempts'] += 1;
 
-            // --- Part 4.6: Then if this value reaches 3, lock them out, reset the count and print an explanation. ---
+            // --- Part 4.6: If this value reaches 3, lock them out, reset the count and print an explanation. ---
             if ($user_attempts['attempts'] >= $max_attempts) {
                 
                 // Lock out for 30 seconds
                 $user_attempts['locked_until'] = $current_time + 30;
-                $user_attempts['attempts'] = 0; // Reset count
+                $user_attempts['attempts'] = 0; 
                 
+                // THIS IS THE SPECIFIC MESSAGE FOR LOCKOUT TRIGGER
                 $error = "Three wrong attempts. Locked out for 30 secs.";
 
             } else {
@@ -108,52 +101,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
             }
         }
 
+        // --- Part 4.8: Before finishing the code, save back all values in the file ---
+        file_put_contents($file, json_encode($attempts));
+    }
+}
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>To-Do List Login</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="my_style.css"> 
-</head>
+    <title>Secure Login</title>
+    </head>
 <body>
-    <div class="body_wrapper">
 
-        <?php require_once 'nav.php'; // VIEW Section begins ?>
+<div class="header-nav">...</div>
 
-        <h1 class="form-title">Secure Login</h1>
+<div class="secure-login-container">
+    <h2>Secure Login</h2>
+    <div class="login-box">
+        <h3>You are currently logged out...</h3>
 
-        <div class="form-content">
-            
-        <?php if (!empty($message)): // Display success message if logged out ?>
-        <h2 style="color: black; margin-bottom: 5px;">
-            <?php echo $message; ?>
-        </h2>
+        <?php if ($message): ?>
+            <p style="color: green;"><?php echo htmlspecialchars($message); ?></p>
         <?php endif; ?>
 
-         <h2 style="margin-top: 5px;">You are currently logged out...</h2>
-    
-         <?php if (!empty($error)): // Display error if logic dictates one: ?>
-        <p style="color: red; font-weight: bold;"><?php echo $error; ?></p>
-         <?php elseif (empty($message)): // Only show "Please log in..." if no errors AND no success message ?>
-        <p>Please log in...</p>
-         <?php endif; ?>
-         <form action="login.php" method="POST">
-        
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($username); ?>" required> 
-        <br><br>
+        <?php if ($error): ?>
+            <p style="color: red; font-weight: bold;"><?php echo htmlspecialchars($error); ?></p>
+        <?php else: ?>
+            <p>Please log in.</p>
+        <?php endif; ?>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required> 
-        <br><br>
-        <input type="submit" value="Login" class="submit-button">
-     </form>
-        
+        <form method="POST" action="login.php">
+            <p>Username:</p>
+            <input type="text" name="username" value="<?php echo htmlspecialchars($username); ?>" required>
+
+            <p>Password:</p>
+            <input type="password" name="password" required>
+
+            <button type="submit" name="login">Login</button>
+        </form>
     </div>
-    </div>
-    <?php require_once 'footer.php'; ?>
+</div>
+
 </body>
 </html>
