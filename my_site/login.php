@@ -1,13 +1,24 @@
 <?php
 
 // 1. Mandatory Session and Configuration Setup
-require_once 'config.php'; // Includes session_start() [cite: 55, 56]
+require_once 'config.php'; 
 
 // 2. Core Data
 $correct_hash = "b14e9015dae06b5e206c2b37178eac45e193792c5ccf1d48974552614c61f2ff";
 $error = '';
 $username = '';
-$message = ''; // New variable to display successful logout message [cite: 66]
+$message = ''; 
+
+// --- Part 4: Anti-Brute Force Setup (Session-Based Storage) ---
+$lockout_duration = 30; // seconds
+$max_attempts = 3; 
+
+// Initialize the lockout array within the session if it doesn't exist
+if (!isset($_SESSION['login_attempts'])) {
+    $_SESSION['login_attempts'] = [];
+}
+// ----------------------------------------------------------------------
+
 
 // --- Part 2.4: Read Cookie for Pre-filling ---
 if (isset($_COOKIE['todo-username'])) {
@@ -15,43 +26,63 @@ if (isset($_COOKIE['todo-username'])) {
 }
 
 // 3. Part 3: Handle Logout Request (Before any other checks)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) { // Checking for 'logout' signal
-    session_destroy(); // Destroy the existing session 
-    session_start();   // Start a new session immediately [cite: 66]
-    $message = "Successfully logged out..."; // Display confirmation message [cite: 66]
-    // Note: Cookie (username) intentionally remains for pre-filling the form.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) { 
+    session_destroy(); 
+    session_start();   
+    $message = "Successfully logged out..."; 
 } 
 // 4. Part 3: Check If User is Already Logged In
 else if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true) {
-    // If user is already logged in via session, skip password check and redirect 
     header('Location: to-do.php');
     exit();
 }
 
 
-// 5. Part 3: Handle Login Attempt (Only if not logging out or already logged in)
+// 5. Part 3 & 4: Handle Login Attempt 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['username'])) {
 
     $username_input = $_POST['username'];
     $password_input = $_POST['password'];
 
+    // 5.1 Initialize User Lockout Data in the Session
+    if (!isset($_SESSION['login_attempts'][$username_input])) {
+        $_SESSION['login_attempts'][$username_input] = ['attempts' => 0, 'locked_until' => 0];
+    }
+    
+    $user_attempts = &$_SESSION['login_attempts'][$username_input]; // Reference for easy use
+    
+    // CRITICAL LOGIC: Part 4 Lockout Check (MUST be BEFORE password check)
+    if ($user_attempts['locked_until'] > time()) { 
+        $time_remaining = $user_attempts['locked_until'] - time();
+        $error = "Account locked. Remaining time: {$time_remaining}s";
+    }
+
     $input_hash = hash("sha256", $password_input);
 
     // Verify if the entered password's hash matches the correct hash
-    if ($input_hash === $correct_hash) {
-
-        // Set session variable to true 
-        $_SESSION['is_logged_in'] = true; 
+    else if ($input_hash === $correct_hash) {
         
-        // Part 2.2: Successful Login - Create "todo-username" Cookie
+        // Reset attempts on successful login
+        $user_attempts['attempts'] = 0; 
+
+        // Set session and cookie (Original Part 2 & 3 Logic)
+        $_SESSION['is_logged_in'] = true; 
         setcookie('todo-username', $username_input, time() + (86400 * 30), "/");
 
-        // Redirection Logic
         header('Location: to-do.php');
         exit();
         
     } else {
-        $error = "The password is wrong.";
+        // Part 4 Failure Logic: Increment attempts and check for lock
+        $user_attempts['attempts'] += 1;
+        
+        if ($user_attempts['attempts'] >= $max_attempts) {
+            $user_attempts['locked_until'] = time() + ($lockout_duration);
+            $user_attempts['attempts'] = 0; // Reset count
+            $error = "Too many attempts. Locked out for {$lockout_duration} seconds."; 
+        } else {
+            $error = "The password is wrong. Attempt #{$user_attempts['attempts']}.";
+        }
     }
 }
 ?>
