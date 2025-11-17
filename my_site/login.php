@@ -1,30 +1,23 @@
 <?php
 // IKIGAI PERSONA: login.php - MODEL SECTION (Absolute Top)
 
-// 1. Mandatory Inclusion and Session Start (Part 3)
+// 1. Mandatory Session Setup and Inclusion (Part 3)
+// Assumes includes/config.php contains only session_start() (critical for Osiris compatibility)
 require_once 'includes/config.php'; 
 
-// --- Core Helper Function (Based on your original logic) ---
+// --- Helper: Redirection Function ---
 function redirect(string $target_file) {
-    // This logic ensures correct pathing for both local (XAMPP/MAMP) and Osiris servers.
+    // Use the logic from your original file, ensuring it terminates the script
     $host = $_SERVER['HTTP_HOST'];
     $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
-    $path_suffix = '/'; 
-
-    if (strpos($host, 'osiris.ubishops.ca') !== false) {
-        // Adjust this path_suffix if your web root is different (e.g., '/~yourusername/')
-        $path_suffix = '/~oraga/my_site/'; 
-    } 
-    // ELSE: Path for local development (adjust as needed, e.g., '/lab7/')
-    
+    $path_suffix = strpos($host, 'osiris.ubishops.ca') !== false ? '/~yourusername/my_site/' : '/'; 
     $redirect_url = $protocol . $host . $path_suffix . $target_file;
     header('Location: ' . $redirect_url);
-    exit(); // CRITICAL: Terminate script after header redirect
+    exit(); 
 }
-// -------------------------------------------------------------------
+// ------------------------------------
 
 // 2. Pre-Check: Already Logged In (Part 3)
-// Zero Margin for Error: If logged in, prevent all further processing. [cite: 155]
 if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true) {
     redirect('to-do.php');
 }
@@ -33,41 +26,38 @@ if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true) {
 $error = '';
 $logout_success = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
-    session_destroy(); // Terminate the session [cite: 162]
-    session_start(); // Start new session to display message [cite: 163]
-    $error = "Successfully logged out..."; [cite: 163]
+    session_destroy(); 
+    session_start(); // Restart session to display a message on the current page
+    $error = "Successfully logged out...";
     $logout_success = true;
 }
 
-// 4. Constants and File Path Setup (Part 4)
-$correct_hash = "b14e9015dae06b5e206c2b37178eac45e193792c5ccf1d48974552614c61f2ff"; // Hash for "CS203"
-$lockout_duration = 30; 
+// 4. Part 4 Constants and File Setup
+$correct_hash = "b14e9015dae06b5e206c2b37178eac45e193792c5ccf1d48974552614c61f2ff"; 
+$lockout_duration = 30; // 30 seconds
 $max_attempts = 3; 
+$file_path = 'login_attempts.json'; // CRITICAL: Update this to the absolute path for Osiris later.
 
-// CRITICAL PATH BLOCKER: Must be updated for Osiris. Use local path for now.
-$file_path = 'login_attempts.json'; 
-
-// Initialize attempts structure.
-$attempts = []; 
-if (file_exists($file_path)) {
-    // Load existing attempts (uses '[]' as fallback if file content is malformed) [cite: 189]
-    $attempts = json_decode(file_get_contents($file_path), true) ?: []; 
-}
+// 4.1. Data Safety/Initialization (P4.1 FIX)
+// Load existing attempts or initialize to an empty array ([]) if file is missing or corrupt.
+$attempts = file_exists($file_path) 
+    ? json_decode(file_get_contents($file_path) ?: '[]', true) 
+    : []; 
 
 
-// 5. Main Login Attempt Handling (Model Logic)
+// 5. Main Login Attempt Handling
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password']) && !$logout_success) {
 
-    // 5.1 Input Validation (Part 3)
     $password_input = $_POST['password'] ?? '';
-    $username_input = $_POST['username'] ?? ''; // New username input
+    // P4.3 FIX: Ensure username is retrieved and defined
+    $username_input = $_POST['username'] ?? ''; 
 
     if (empty($password_input) || empty($username_input)) {
-        $error = "Both username and password are required for login."; [cite: 164]
+        $error = "Both username and password are required for login.";
     } else {
         $input_hash = hash("sha256", $password_input);
 
-        // 5.2 Initialize User Lockout Data (Part 4)
+        // 5.1 Initialize User Lockout Data
         if (!isset($attempts[$username_input])) {
             $attempts[$username_input] = [
                 'attempts' => 0,
@@ -75,64 +65,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password']) && !$logo
             ];
         }
 
-        // 5.3 Lockout Check (CRITICAL SEQUENCE: Must be before password check) (Part 4)
+        // 5.2 Lockout Check (P4.2 FIX: CRITICAL SEQUENCE)
         if ($attempts[$username_input]['locked_until'] > time()) { 
             $time_remaining = $attempts[$username_input]['locked_until'] - time();
-            $error = "Locked out, sorry. Remaining time: {$time_remaining}"; [cite: 201]
-            // Proceed to 5.6 (Save) and exit the POST logic.
+            $error = "Account locked for 30 seconds. Please wait. Remaining time: {$time_remaining}s";
+            // Do NOT proceed to password check. Jump to final save.
         } 
         
-        // 5.4 Successful Login (Part 2 & 3)
+        // 5.3 Successful Login (Password check is nested here)
         else if ($input_hash === $correct_hash) {
             
-            $_SESSION['is_logged_in'] = true; // Set session [cite: 154]
-            setcookie('todo-username', $username_input, time() + (86400 * 30), '/'); // Set cookie [cite: 138]
+            $_SESSION['is_logged_in'] = true; 
+            setcookie('todo-username', $username_input, time() + (86400 * 30), '/'); // Part 2
             $attempts[$username_input]['attempts'] = 0; // Reset attempts on success
             
-            // IMPORTANT: Save attempts file before redirect
-            file_put_contents($file_path, json_encode($attempts)); [cite: 202, 203]
+            // P4.1 FIX: Save attempts file on successful change before redirect
+            file_put_contents($file_path, json_encode($attempts));
 
             redirect('to-do.php'); // Exits script
         } 
 
-        // 5.5 Failed Login (Part 4)
+        // 5.4 Failed Login (Password check failed)
         else {
-            $attempts[$username_input]['attempts'] += 1; [cite: 195, 196]
+            $attempts[$username_input]['attempts'] += 1;
             
             if ($attempts[$username_input]['attempts'] >= $max_attempts) {
-                $attempts[$username_input]['locked_until'] = time() + ($lockout_duration); [cite: 198]
+                $attempts[$username_input]['locked_until'] = time() + ($lockout_duration);
                 $attempts[$username_input]['attempts'] = 0; // Reset count
-                $error = "Three wrong attempts. Locked out for {$lockout_duration} secs."; 
+                $error = "Too many attempts. Account locked for {$lockout_duration} seconds."; 
             } else {
-                $error = "Wrong password. Try again. This is your attempt #{$attempts[$username_input]['attempts']}"; [cite: 203]
+                $error = "Wrong password. Attempt #{$attempts[$username_input]['attempts']}";
             }
-            // Proceed to 5.6 (Save attempts).
         }
 
-        // 5.6 Save Attempts (Zero Margin for Error: File must be saved on all POST actions)
-        file_put_contents($file_path, json_encode($attempts)); [cite: 202, 203]
+        // 5.5 Final Save (P4.1 FIX: File must be saved on ALL POST actions)
+        // This runs after a failed login, or if a user was checked but was still locked out (5.2)
+        file_put_contents($file_path, json_encode($attempts));
     }
 }
 
 
-// --- VIEW SECTION (Below DOCTYPE, only simple PHP/HTML) ---
-
-// Retrieve username from cookie for pre-filling the form (Part 2) [cite: 141]
+// --- VIEW SECTION SETUP ---
+// Retrieve username from cookie for pre-filling the form (Part 2)
 $prefill_username = $_COOKIE['todo-username'] ?? ''; 
 
 ?>
+
 <!DOCTYPE html>
 <html>
-<head>
-    <title>To-Do List Login</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="my_style.css"> 
-    <style> 
-        .error-message { color: red; font-weight: bold; }
-        .main-message { font-size: 2em; }
-    </style>
-</head>
 <body>
     <div class="body_wrapper">
 
