@@ -1,7 +1,7 @@
 <?php
 
 // 1. Mandatory Session and Configuration Setup
-require_once 'config.php'; 
+require_once 'config.php'; // Includes session_start() 
 
 // 2. Core Data
 $correct_hash = "b14e9015dae06b5e206c2b37178eac45e193792c5ccf1d48974552614c61f2ff";
@@ -9,7 +9,7 @@ $error = '';
 $username = '';
 $message = ''; 
 
-// --- START: MINIMAL PART 4 CODE ---
+// --- START: PART 4 SIMPLE CHANGES (SETUP) ---
 $lockout_duration = 30; // 30 seconds
 $max_attempts = 3; 
 
@@ -17,7 +17,8 @@ $max_attempts = 3;
 if (!isset($_SESSION['login_attempts'])) {
     $_SESSION['login_attempts'] = [];
 }
-// --- END: MINIMAL PART 4 CODE ---
+// --- END: PART 4 SIMPLE CHANGES (SETUP) ---
+
 
 // --- Part 2.4: Read Cookie for Pre-filling ---
 if (isset($_COOKIE['todo-username'])) {
@@ -88,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
     // --- END: PART 4 LOGIC INTEGRATION ---
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
