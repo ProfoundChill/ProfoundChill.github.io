@@ -1,7 +1,7 @@
 <?php
 
 // 1. Mandatory Session and Configuration Setup
-require_once 'config.php'; 
+require_once 'config.php'; // MUST contain ONLY <?php session_start(); 
 
 // 2. Core Data
 $correct_hash = "b14e9015dae06b5e206c2b37178eac45e193792c5ccf1d48974552614c61f2ff";
@@ -10,7 +10,7 @@ $username = '';
 $message = ''; 
 
 // --- Part 4: Anti-Brute Force Setup (Session-Based Storage) ---
-$lockout_duration = 30; // seconds
+$lockout_duration = 30; 
 $max_attempts = 3; 
 
 // Initialize the lockout array within the session if it doesn't exist
@@ -49,11 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
         $_SESSION['login_attempts'][$username_input] = ['attempts' => 0, 'locked_until' => 0];
     }
     
-    $user_attempts = &$_SESSION['login_attempts'][$username_input]; // Reference for easy use
+    // NO REFERENCE OPERATOR (&) HERE: Access the array directly.
     
     // CRITICAL LOGIC: Part 4 Lockout Check (MUST be BEFORE password check)
-    if ($user_attempts['locked_until'] > time()) { 
-        $time_remaining = $user_attempts['locked_until'] - time();
+    if ($_SESSION['login_attempts'][$username_input]['locked_until'] > time()) { 
+        $time_remaining = $_SESSION['login_attempts'][$username_input]['locked_until'] - time();
         $error = "Account locked. Remaining time: {$time_remaining}s";
     }
 
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
     else if ($input_hash === $correct_hash) {
         
         // Reset attempts on successful login
-        $user_attempts['attempts'] = 0; 
+        $_SESSION['login_attempts'][$username_input]['attempts'] = 0; 
 
         // Set session and cookie (Original Part 2 & 3 Logic)
         $_SESSION['is_logged_in'] = true; 
@@ -74,14 +74,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
         
     } else {
         // Part 4 Failure Logic: Increment attempts and check for lock
-        $user_attempts['attempts'] += 1;
+        $_SESSION['login_attempts'][$username_input]['attempts'] += 1; // Direct access
         
-        if ($user_attempts['attempts'] >= $max_attempts) {
-            $user_attempts['locked_until'] = time() + ($lockout_duration);
-            $user_attempts['attempts'] = 0; // Reset count
+        if ($_SESSION['login_attempts'][$username_input]['attempts'] >= $max_attempts) {
+            $_SESSION['login_attempts'][$username_input]['locked_until'] = time() + ($lockout_duration);
+            $_SESSION['login_attempts'][$username_input]['attempts'] = 0; // Reset count
             $error = "Too many attempts. Locked out for {$lockout_duration} seconds."; 
         } else {
-            $error = "The password is wrong. Attempt #{$user_attempts['attempts']}.";
+            $error = "The password is wrong. Attempt #{$_SESSION['login_attempts'][$username_input]['attempts']}.";
         }
     }
 }
