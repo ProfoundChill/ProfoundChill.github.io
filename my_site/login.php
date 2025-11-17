@@ -108,18 +108,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
             }
         }
 
-        // --- Part 4.8: Before finishing the code, save back all values in the file ---
-        file_put_contents($file, json_encode($attempts));
-
-        if (!file_put_contents($file, json_encode($attempts))) {
-     exit("FATAL ERROR: Could not write to login_attempts.json. Check file permissions.");
-}
-// Show the current attempts and locked status after saving
-echo "<pre>Attempts Array Saved: ";
-print_r($attempts);
-echo "</pre>";
-    }
-}
 ?>
 
 <!DOCTYPE html>
