@@ -9,6 +9,17 @@ $error = '';
 $username = '';
 $message = ''; // New variable to display successful logout message [cite: 66]
 
+// --- Part 4: Anti-Brute Force Setup (New Code Block) ---
+$lockout_duration = 30; // 30 seconds
+$max_attempts = 3; 
+// CRITICAL BLOCKER: Must be updated to the ABSOLUTE path for Osiris
+$file_path = 'login_attempts.json'; 
+
+// CRITICAL LINE 1: Attempt to read the file. (Failure Point)
+$attempts = file_exists($file_path) 
+    ? json_decode(file_get_contents($file_path) ?: '[]', true) 
+    : [];
+
 // --- Part 2.4: Read Cookie for Pre-filling ---
 if (isset($_COOKIE['todo-username'])) {
     $username = htmlspecialchars($_COOKIE['todo-username']);
