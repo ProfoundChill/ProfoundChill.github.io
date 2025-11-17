@@ -103,9 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
                 $error = "Wrong password. Try again. This is your attempt # " . $user_attempts['attempts'];
             }
         }
-
-        // --- Part 4.8: Save back all values in the file ---
-        file_put_contents($file, json_encode($attempts));
         
     }
 }
