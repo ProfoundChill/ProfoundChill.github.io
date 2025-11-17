@@ -1,1 +1,14 @@
-{}
+{
+    "user123": {
+        "attempts": 1,
+        "locked_until": 0
+    },
+    "guest_user": {
+        "attempts": 2,
+        "locked_until": 0
+    },
+    "locked_user": {
+        "attempts": 0,
+        "locked_until": 1763321590
+    }
+}
