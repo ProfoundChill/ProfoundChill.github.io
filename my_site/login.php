@@ -1,5 +1,4 @@
 <?php
-// IKIGAI PERSONA: login.php - MODEL SECTION (Absolute Top)
 
 // 1. Mandatory Session Setup and Inclusion (Part 3)
 // Assumes includes/config.php contains only session_start() (critical for Osiris compatibility)
