@@ -7,7 +7,7 @@ require_once 'config.php'; // Includes session_start()
 $correct_hash = "b14e9015dae06b5e206c2b37178eac45e193792c5ccf1d48974552614c61f2ff";
 $error = '';
 $username = '';
-$message = ''; // New variable to display successful logout message 
+$message = ''; // Variable to display successful logout message 
 
 // --- Part 4: Locking Mechanism Setup ---
 $file = 'login_attempts.json'; 
@@ -19,11 +19,10 @@ if (isset($_COOKIE['todo-username'])) {
 }
 
 // 4. Part 3: Handle Logout Request (Before any other checks)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) { // Checking for 'logout' signal
-    session_destroy(); // Destroys the existing session 
-    session_start();   // Starts a new session immediately 
-    $message = "Successfully logged out..."; // Display confirmation message 
-    // Note: Cookie (username) intentionally remains for pre-filling the form.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
+    session_destroy();
+    session_start();
+    $message = "Successfully logged out...";
 } 
 // 5. Part 3: Check If User is Already Logged In
 else if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true) {
@@ -40,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
     $input_hash = hash("sha256", $password_input);
 
     // --- Part 4.3a: Load the file's data. Else, set $attempts to an empty array. ---
-    // // Load existing attempts (if file exists)
     if (file_exists($file)) {
         $attempts = json_decode(file_get_contents($file), true);
     } else {
@@ -61,24 +59,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
 
     if ($user_attempts['locked_until'] > $current_time) {
         $remaining_time = $user_attempts['locked_until'] - $current_time;
-        $error = "Locked out, sorry. Remaining time: {$remaining_time}";
+        // **This is the lockout message you asked for!**
+        $error = "Locked out, sorry. Remaining time: {$remaining_time} seconds."; 
 
         // --- Part 4.8: Save back all values in the file (even if locked out) ---
-        // Although the data hasn't changed here, we follow the instruction.
         file_put_contents($file, json_encode($attempts)); 
-        // Note: The logic exits here if locked out.
         
     } else {
         // --- Not locked out: proceed to password verification ---
 
-        // Verify if the entered password's hash matches the correct hash
         if ($input_hash === $correct_hash) {
             
             // Successful Login: Reset attempts for this user
             $user_attempts['attempts'] = 0;
             $user_attempts['locked_until'] = 0; 
             
-            // Set session variable to true 
             $_SESSION['is_logged_in'] = true; 
             
             // Part 2.2: Successful Login - Create "todo-username" Cookie
@@ -91,30 +86,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
         } else {
             // Wrong password logic
 
-            // --- Part 4.5: When you check the password, if it is wrong, add 1 to that user's value: ---
+            // --- Part 4.5: Add 1 to that user's value: ---
             $user_attempts['attempts'] += 1;
 
-            // --- Part 4.6: Then if this value reaches 3, lock them out, reset the count and print an explanation. ---
+            // --- Part 4.6: Lock them out if max attempts reached ---
             if ($user_attempts['attempts'] >= $max_attempts) {
                 
                 // Lock out for 30 seconds
                 $user_attempts['locked_until'] = $current_time + 30;
                 $user_attempts['attempts'] = 0; // Reset count
                 
-                $error = "Three wrong attempts. Locked out for 30 secs.";
+                // **This is the max attempts message you asked for!**
+                $error = "Three wrong attempts. Locked out for 30 seconds.";
 
             } else {
                 $error = "Wrong password. Try again. This is your attempt # " . $user_attempts['attempts'];
             }
         }
 
-        // --- Part 4.8: Before finishing the code, save back all values in the file ---
+        // --- Part 4.8: Save back all values in the file ---
         file_put_contents($file, json_encode($attempts));
         
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -134,17 +129,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
             
         <?php if (!empty($message)): // Display success message if logged out ?>
         <h2 style="color: black; margin-bottom: 5px;">
-            <?php echo $message; ?>
+            <?php echo htmlspecialchars($message); ?>
         </h2>
         <?php endif; ?>
 
          <h2 style="margin-top: 5px;">You are currently logged out...</h2>
     
          <?php if (!empty($error)): // Display error if logic dictates one: ?>
-        <p style="color: red; font-weight: bold;"><?php echo $error; ?></p>
+        <p style="color: red; font-weight: bold;"><?php echo htmlspecialchars($error); ?></p>
          <?php elseif (empty($message)): // Only show "Please log in..." if no errors AND no success message ?>
         <p>Please log in...</p>
          <?php endif; ?>
+         
          <form action="login.php" method="POST">
         
         <label for="username">Username:</label>
