@@ -108,6 +108,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
             }
         }
 
+        // --- Part 4.8: Before finishing the code, save back all values in the file ---
+        file_put_contents($file, json_encode($attempts));
+        
+    }
+}
 ?>
 
 <!DOCTYPE html>
