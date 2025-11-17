@@ -1,6 +1,6 @@
 {
     "testuser": {
-        "attempts": 3,
-        "locked_until": 30
+        "attempts": 0,
+        "locked_until": 0
     }
 }
