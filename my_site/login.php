@@ -40,31 +40,60 @@ else if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true)
 }
 
 
-// 5. Part 3: Handle Login Attempt (Only if not logging out or already logged in)
+// 5. Part 3 & 4: Handle Login Attempt (Modified)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['username'])) {
 
     $username_input = $_POST['username'];
     $password_input = $_POST['password'];
 
+    // 5.1 Initialize User Lockout Data
+    if (!isset($attempts[$username_input])) {
+        $attempts[$username_input] = ['attempts' => 0, 'locked_until' => 0];
+    }
+    
+    // CRITICAL LOGIC: Part 4 Lockout Check (MUST be BEFORE password check)
+    if ($attempts[$username_input]['locked_until'] > time()) { 
+        $time_remaining = $attempts[$username_input]['locked_until'] - time();
+        $error = "Account locked. Remaining time: {$time_remaining}s";
+    }
+
     $input_hash = hash("sha256", $password_input);
 
     // Verify if the entered password's hash matches the correct hash
-    if ($input_hash === $correct_hash) {
-
-        // Set session variable to true 
-        $_SESSION['is_logged_in'] = true; 
+    else if ($input_hash === $correct_hash) {
         
-        // Part 2.2: Successful Login - Create "todo-username" Cookie
+        // Reset attempts on successful login
+        $attempts[$username_input]['attempts'] = 0; 
+
+        // Set session and cookie (Original Part 2 & 3 Logic)
+        $_SESSION['is_logged_in'] = true; 
         setcookie('todo-username', $username_input, time() + (86400 * 30), "/");
 
-        // Redirection Logic
+        // CRITICAL LINE 2: Save attempts file on successful change before redirect (Failure Point)
+        file_put_contents($file_path, json_encode($attempts));
+
         header('Location: to-do.php');
         exit();
         
     } else {
-        $error = "The password is wrong.";
+        // Part 4 Failure Logic: Increment attempts and check for lock
+        $attempts[$username_input]['attempts'] += 1;
+        
+        if ($attempts[$username_input]['attempts'] >= $max_attempts) {
+            $attempts[$username_input]['locked_until'] = time() + ($lockout_duration);
+            $attempts[$username_input]['attempts'] = 0; // Reset count
+            $error = "Too many attempts. Locked out for {$lockout_duration} seconds."; 
+        } else {
+            $error = "The password is wrong. Attempt #{$attempts[$username_input]['attempts']}.";
+        }
     }
+    
+    // CRITICAL LINE 3: Final Save (Failure Point)
+    // Runs after a failed login, or if a user was checked but was still locked out.
+    file_put_contents($file_path, json_encode($attempts));
 }
+?><?php
+
 ?>
 
 <!DOCTYPE html>
