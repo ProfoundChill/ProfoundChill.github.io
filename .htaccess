@@ -1,6 +1,5 @@
 # .htaccess 
 
 <Files "login_attempts.json">
-    Order allow,deny
-    Deny from all
+   Require all denied
 </Files>
