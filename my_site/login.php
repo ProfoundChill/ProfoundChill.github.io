@@ -1,60 +1,62 @@
 <?php
 
 // =================================================================
-// 🚨 MODEL SECTION (Part 3 Updates)
+// PHP SCRIPT (MODEL SECTION) - All logic and data processing here
 // =================================================================
 
-// 1. Mandatory Session and Configuration Setup
-require_once 'config.php'; // Includes session_start() [cite: 55, 56]
-
-// 2. Core Data
+// 1. Core Data
+// Correct hash for "CS203" using sha256.
 $correct_hash = "b14e9015dae06b5e206c2b37178eac45e193792c5ccf1d48974552614c61f2ff";
 $error = '';
-$username = '';
-$message = ''; // New variable to display successful logout message [cite: 66]
+$username = ''; // Initialize username variable
+$redirect_url = ''; // Variable for redirection target
 
-// --- Part 2.4: Read Cookie for Pre-filling ---
+// --- Part 2: Read Cookie for Pre-filling (Runs before form submission check) ---
 if (isset($_COOKIE['todo-username'])) {
+    // If the cookie exists, use its value to pre-fill the form (Part 2.4)
     $username = htmlspecialchars($_COOKIE['todo-username']);
 }
 
-// 3. Part 3: Handle Logout Request (Before any other checks)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) { // Checking for 'logout' signal
-    session_destroy(); // Destroy the existing session 
-    session_start();   // Start a new session immediately [cite: 66]
-    $message = "Successfully logged out..."; // Display confirmation message [cite: 66]
-    // Note: Cookie (username) intentionally remains for pre-filling the form.
-} 
-// 4. Part 3: Check If User is Already Logged In
-else if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true) {
-    // If user is already logged in via session, skip password check and redirect 
-    header('Location: to-do.php');
-    exit();
-}
+// Check if the form was submitted via the POST method and critical fields are set
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
 
-
-// 5. Part 3: Handle Login Attempt (Only if not logging out or already logged in)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['username'])) {
-
-    $username_input = $_POST['username'];
+    // --- Part 2: Get submitted username and password ---
+    $username_input = $_POST['username'] ?? ''; // Part 2.1 (We assume a 'username' input will be added)
     $password_input = $_POST['password'];
 
+    // 2. Hash the user's input password for secure comparison
     $input_hash = hash("sha256", $password_input);
 
-    // Verify if the entered password's hash matches the correct hash
+    // 3. Verify if the entered password's hash matches the correct hash
     if ($input_hash === $correct_hash) {
 
-        // Set session variable to true 
-        $_SESSION['is_logged_in'] = true; 
-        
-        // Part 2.2: Successful Login - Create "todo-username" Cookie
+        // --- Part 2: Successful Login - Create Cookie (Part 2.2) ---
+        // Set cookie for 30 days. The path '/' makes it available site-wide.
         setcookie('todo-username', $username_input, time() + (86400 * 30), "/");
 
-        // Redirection Logic
-        header('Location: to-do.php');
-        exit();
+        // --- Redirection Logic (FINAL, Simplified Dynamic Path) ---
+        // This is simplified from the original complex logic, targeting the correct file.
+        $target_file = 'to-do.php';
+
+        $host = $_SERVER['HTTP_HOST'];
+        
+        // Original logic adapted for direct redirection to the file, which should be in /my_site/
+        if (strpos($host, 'osiris.ubishops.ca') !== false) {
+            // Osiris path: Use absolute path relative to user's home (e.g., /~oraga/my_site/to-do.php)
+            $protocol = 'https://';
+            // Assuming your user directory on Osiris is 'oraga'
+            $path_suffix = '/~oraga/my_site/'; 
+            $redirect_url = $protocol . $host . $path_suffix . $target_file;
+        } else {
+            // Local path: use local relative path (assuming files are in the same folder)
+            $redirect_url = $target_file;
+        }
+
+        header('Location: ' . $redirect_url);
+        exit(); // Crucial: Terminate the script after sending the header
         
     } else {
+        // Set error message if the password comparison fails (incorrect password)
         $error = "The password is wrong.";
     }
 }
@@ -76,15 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
         <h1 class="form-title">Secure Login</h1>
 
         <div class="form-content">
-            
-            [cite_start]<?php if (!empty($message)): // Display success message if logged out[cite: 73]?>
-                <h2 style="color: black; margin-bottom: 5px;">
-                    <?php echo $message; ?>
-                </h2>
-            <?php endif; ?>
-
-            <h2 style="margin-top: 5px;">You are currently logged out...</h2>
-            <p>Please log in...</p>
+            <h2>Enter Username and Password</h2>
 
             <?php if (!empty($error)): // Display error if logic dictates one: ?>
                 <p style="color: red; font-weight: bold;"><?php echo $error; ?></p>
