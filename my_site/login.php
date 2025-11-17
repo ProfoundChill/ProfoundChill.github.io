@@ -131,32 +131,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
 
         <div class="form-content">
             
-           <?php if (!empty($message)): // Display success message if logged out[cite: 73]?>
-                <h2 style="color: black; margin-bottom: 5px;">
-                    <?php echo $message; ?>
-                </h2>
-            <?php endif; ?>
+        <?php if (!empty($message)): // Display success message if logged out ?>
+        <h2 style="color: black; margin-bottom: 5px;">
+            <?php echo $message; ?>
+        </h2>
+        <?php endif; ?>
 
-            <h2 style="margin-top: 5px;">You are currently logged out...</h2>
-            <p>Please log in...</p>
-
-            <?php if (!empty($error)): // Display error if logic dictates one: ?>
-                <p style="color: red; font-weight: bold;"><?php echo $error; ?></p>
-            <?php endif; ?>
-
-            <form action="login.php" method="POST">
-                
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" value="<?php echo $username; ?>" required> 
-                <br><br>
-
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required> 
-                <br><br>
-                <input type="submit" value="Login" class="submit-button">
-            </form>
-        </div>
+         <h2 style="margin-top: 5px;">You are currently logged out...</h2>
+    
+         <?php if (!empty($error)): // Display error if logic dictates one: ?>
+        <p style="color: red; font-weight: bold;"><?php echo $error; ?></p>
+         <?php elseif (empty($message)): // Only show "Please log in..." if no errors AND no success message ?>
+        <p>Please log in...</p>
+         <?php endif; ?>
+         <form action="login.php" method="POST">
         
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($username); ?>" required> 
+        <br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required> 
+        <br><br>
+        <input type="submit" value="Login" class="submit-button">
+     </form>
+        
+    </div>
     </div>
     <?php require_once 'footer.php'; ?>
 </body>
