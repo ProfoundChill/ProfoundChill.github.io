@@ -1,4 +1,3 @@
-<!DOCTYPE html> 
 <html>
 <head>
     <title>Oliver's Artistic Self</title> 
@@ -7,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="my_style.css">
     
-    <script src="nav.js"></script> 
+    
     <style>
         /* Begins the CSS styling section */
         
@@ -188,22 +187,17 @@
 <body>
     <div class="body_wrapper">
         
-        <nav id="main-nav"></nav>
-        <script>
-            // Call setNav with the current page path to highlight the current link
-            setNav(location.pathname); 
-        </script>
+        <?php require_once 'nav.php'; ?>
+       
         <h1>My Artistic Self</h1>
         <p class="keyword" id="adventure">Adventure</p> <p class="keyword" id="technology">Technology</p>
-        <p class="keyword" id="curious">Curious</p>
-        <p class="keyword" id="creative">Creative</p> 
+        <p class="keyword" id="curious">Curiousity</p>
+        <p class="keyword" id="creative">Creativity</p> 
         <p class="keyword" id="global">Global</p>
         
         <div class="explanation">
             <p>The background image represents the intersection of technology and art - the vibrant, flowing digital patterns mirror my passion for both coding and creative expression. The five keywords capture different aspects of my personality: my love for <strong>adventure</strong> through travel and new experiences, my dedication to <strong>technology</strong> and programming, my naturally <strong>curious</strong> mind that drives me to learn, my <strong>creative</strong> approach to problem-solving, and my <strong>global</strong> perspective shaped by living in Venezuela, Dubai, the US, and now Canada.</p>
         </div>
         
-        <a href="index.html" class="home-link">← Back to Home</a> </div>
-    <footer>This website is made for CS203 labs!</footer>
-</body>
-</html>
+        <a class="home-link" href="index.php">Return to Home Page</a>
+   
