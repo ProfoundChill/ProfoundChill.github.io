@@ -1,54 +1,112 @@
 <?php
 
-// PHP Script: Part 4 - Handles login attempt and verifies the hashed password.
+// 1. Mandatory Session and Configuration Setup
+require_once 'config.php'; // Includes session_start()
 
-// 1. Correct hash for "CS203" using sha256.
+// 2. Core Data
 $correct_hash = "b14e9015dae06b5e206c2b37178eac45e193792c5ccf1d48974552614c61f2ff";
-
 $error = '';
+$username = '';
+$message = ''; // Variable to display successful logout message 
 
+// --- Part 4: Locking Mechanism Setup ---
+$file = 'login_attempts.json'; 
+$max_attempts = 3;
 
-// Check if the form was submitted via the POST method and the password field is set
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
+// 3. Part 2.4: Read Cookie for Pre-filling
+if (isset($_COOKIE['todo-username'])) {
+    $username = htmlspecialchars($_COOKIE['todo-username']);
+}
 
+// 4. Part 3: Handle Logout Request (Before any other checks)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
+    session_destroy();
+    session_start();
+    $message = "Successfully logged out...";
+} 
+// 5. Part 3: Check If User is Already Logged In
+else if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true) {
+    // If user is already logged in via session, skip password check and redirect 
+    header('Location: to-do.php');
+    exit();
+}
+
+// 6. Part 3 & 4: Handle Login Attempt
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['username'])) {
+
+    $username_input = $_POST['username'];
     $password_input = $_POST['password'];
-
-    // 2. Hash the user's input password for secure comparison
     $input_hash = hash("sha256", $password_input);
 
-    // 3. Verify if the entered password's hash matches the correct hash
-    if ($input_hash === $correct_hash) {
+    // --- Part 4.3a: Load the file's data. Else, set $attempts to an empty array. ---
+    if (file_exists($file)) {
+        $attempts = json_decode(file_get_contents($file), true);
+    } else {
+        $attempts = [];
+    }
 
-        // --- Redirection Logic (FINAL, Simplified Dynamic Path) ---
-        $host = $_SERVER['HTTP_HOST'];
-        $target_file = '';
-        
-        // Check if we are on the Osiris server
-        if (strpos($host, 'osiris.ubishops.ca') !== false) {
-            // Case 2: Osiris/Web Server path - Use HTTPS and the full relative path
-            $protocol = 'https://';
-            // The path must include /~oraga/ and the subfolder /my_site/
-            $path_suffix = '/~oraga/my_site/to-do.php'; 
-        } else {
-            // Case 1: Local XAMPP/LAMP setup - Use HTTP and the local repo name
-            $protocol = 'http://';
-            $path_suffix = '/ProfoundChill.github.io/';
-        }
+    // --- Part 4.4: Verify if that user exists in your file. Else, create it. ---
+    if (!isset($attempts[$username_input])) {
+        $attempts[$username_input] = [
+            'attempts' => 0,
+            'locked_until' => 0
+        ];
+    }
 
-        // Construct the full URL and Redirect
-        $BASE_URL = $protocol . $host . $path_suffix;
-        $redirect_url = $BASE_URL . $target_file;
-        
-        header('Location: ' . $redirect_url);
-        exit(); // Crucial: Terminate the script after sending the header
+    // --- Part 4.7: Before verifying the password, check if that user is locked out: ---
+    $current_time = time();
+    $user_attempts = &$attempts[$username_input]; // Use reference for easier updating
+
+    if ($user_attempts['locked_until'] > $current_time) {
+        $remaining_time = $user_attempts['locked_until'] - $current_time;
+        // **This is the lockout message you asked for!**
+        $error = "Locked out, sorry. Remaining time: {$remaining_time} seconds."; 
+
+        // --- Part 4.8: Save back all values in the file (even if locked out) ---
+        file_put_contents($file, json_encode($attempts)); 
         
     } else {
-        // Set error message if the password comparison fails (incorrect password)
-        $error = "The password is wrong.";
+        // --- Not locked out: proceed to password verification ---
+
+        if ($input_hash === $correct_hash) {
+            
+            // Successful Login: Reset attempts for this user
+            $user_attempts['attempts'] = 0;
+            $user_attempts['locked_until'] = 0; 
+            
+            $_SESSION['is_logged_in'] = true; 
+            
+            // Part 2.2: Successful Login - Create "todo-username" Cookie
+            setcookie('todo-username', $username_input, time() + (86400 * 30), "/");
+
+            // Redirection Logic
+            header('Location: to-do.php');
+            exit();
+            
+        } else {
+            // Wrong password logic
+
+            // --- Part 4.5: Add 1 to that user's value: ---
+            $user_attempts['attempts'] += 1;
+
+            // --- Part 4.6: Lock them out if max attempts reached ---
+            if ($user_attempts['attempts'] >= $max_attempts) {
+                
+                // Lock out for 30 seconds
+                $user_attempts['locked_until'] = $current_time + 30;
+                $user_attempts['attempts'] = 0; // Reset count
+                
+                // **This is the max attempts message you asked for!**
+                $error = "Three wrong attempts. Locked out for 30 seconds.";
+
+            } else {
+                $error = "Wrong password. Try again. This is your attempt # " . $user_attempts['attempts'];
+            }
+        }
+        
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,24 +118,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
 <body>
     <div class="body_wrapper">
 
-        <?php require_once 'nav.php'; ?>
+        <?php require_once 'nav.php'; // VIEW Section begins ?>
 
         <h1 class="form-title">Secure Login</h1>
 
         <div class="form-content">
-            <h2>Enter Password to Access To-Do List</h2>
+            
+        <?php if (!empty($message)): // Display success message if logged out ?>
+        <h2 style="color: black; margin-bottom: 5px;">
+            <?php echo htmlspecialchars($message); ?>
+        </h2>
+        <?php endif; ?>
 
-            <?php if (!empty($error)): ?>
-                <p style="color: red; font-weight: bold;"><?php echo $error; ?></p>
-            <?php endif; ?>
+         <h2 style="margin-top: 5px;">You are currently logged out...</h2>
+    
+         <?php if (!empty($error)): // Display error if logic dictates one: ?>
+        <p style="color: red; font-weight: bold;"><?php echo htmlspecialchars($error); ?></p>
+         <?php elseif (empty($message)): // Only show "Please log in..." if no errors AND no success message ?>
+        <p>Please log in...</p>
+         <?php endif; ?>
+         
+         <form action="login.php" method="POST">
+        
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($username); ?>" required> 
+        <br><br>
 
-            <form action="login.php" method="POST">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required> 
-                <br><br>
-                <input type="submit" value="Login" class="submit-button">
-            </form>
-        </div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required> 
+        <br><br>
+        <input type="submit" value="Login" class="submit-button">
+     </form>
         
     </div>
+    </div>
     <?php require_once 'footer.php'; ?>
+</body>
+</html>

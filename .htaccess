@@ -1,0 +1,5 @@
+# .htaccess 
+
+<Files "login_attempts.json">
+   Require all denied
+</Files>
