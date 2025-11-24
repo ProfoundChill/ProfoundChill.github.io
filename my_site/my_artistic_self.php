@@ -187,6 +187,11 @@
 <body>
     <div class="body_wrapper">
         
+    <?php
+// The header includes the start of the HTML, the CSS links, and the theme.js script.
+require_once 'header.php'; 
+// Any other necessary includes or page-specific logic here...
+?>
         <?php require_once 'nav.php'; ?>
        
         <h1>My Artistic Self</h1>

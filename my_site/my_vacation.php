@@ -8,6 +8,12 @@
         <div class="body_wrapper">
             
             <?php require_once 'nav.php'; ?>
+
+            <?php
+// The header includes the start of the HTML, the CSS links, and the theme.js script.
+require_once 'header.php'; 
+// Any other necessary includes or page-specific logic here...
+?>
             
             <h1>Trip to Kenya</h1>
             <p>My ideal vacation would be a trip to Nairobi, Kenya, with my family. It would be a breathtaking experience to see animals you usually see on National Geographic, like giraffes, tigers, and lions. The greatest part of the trip would be a hot air balloon ride with my entire family, which would be an absolutely amazing and unforgettable experience.</p>

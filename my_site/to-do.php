@@ -1,5 +1,6 @@
 <?php
 
+
 require_once 'config.php'; // Includes session_start()
 
 // Part 3: Access Control - If not logged in, redirect to login page
@@ -33,6 +34,11 @@ $page_title = $username . " To-Do List!";
             right: 15px; 
         }
     </style>
+    <?php
+// The header includes the start of the HTML, the CSS links, and the theme.js script.
+require_once 'header.php'; 
+// Any other necessary includes or page-specific logic here...
+?>
 </head>
 <body>
     <div class="body_wrapper">

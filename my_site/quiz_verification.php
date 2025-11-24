@@ -11,6 +11,8 @@ $results = [
     'COOL' => ['min' => 7, 'max' => 10, 'message' => "You are energetic, social, and the life of the party!"],
 ];
 
+
+
 $score = 0;
 // Default to 'Guest' if userName is not set, and sanitize it for display (security best practice)
 $userName = isset($_GET['userName']) ? htmlspecialchars($_GET['userName']) : 'Guest'; 
@@ -67,6 +69,12 @@ if (isset($_GET['userName'], $_GET['userEmail'], $_GET['q1_dessert'], $_GET['q2_
     // Error for when the form was not submitted correctly (e.g., user navigated here directly)
     $error = "The quiz form was not submitted correctly. Please go back and complete the form.";
 }
+?>
+
+<?php
+// The header includes the start of the HTML, the CSS links, and the theme.js script.
+require_once 'header.php'; 
+// Any other necessary includes or page-specific logic here...
 ?>
 
 <!DOCTYPE html>

@@ -9,6 +9,7 @@ $error = '';
 $username = '';
 $message = ''; // Variable to display successful logout message 
 
+
 // --- Part 4: Locking Mechanism Setup ---
 $file = 'login_attempts.json'; 
 $max_attempts = 3;
@@ -103,10 +104,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
                 $error = "Wrong password. Try again. This is your attempt # " . $user_attempts['attempts'];
             }
         }
+        // --- Part 4.8: Save back all values in the file ---
         file_put_contents($file, json_encode($attempts));
         
     }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -154,5 +158,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['u
     </div>
     </div>
     <?php require_once 'footer.php'; ?>
+    <?php
+// The header includes the start of the HTML, the CSS links, and the theme.js script.
+require_once 'header.php'; 
+// Any other necessary includes or page-specific logic here...
+?>
 </body>
 </html>

@@ -80,5 +80,10 @@
         
     </div>
     <?php require_once 'footer.php'; ?>
+    <?php
+// The header includes the start of the HTML, the CSS links, and the theme.js script.
+require_once 'header.php'; 
+// Any other necessary includes or page-specific logic here...
+?>
 </body>
 </html>

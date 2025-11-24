@@ -1,0 +1,19 @@
+{
+    "post_1": {
+        "id": "post_1",
+        "date": "2025-11-23",
+        "title": "The Architecture of this Blog",
+        "paragraphs": [
+            "Welcome to the digital log. This specific page is built using a strict MVC-like pattern to ensure code maintainability.",
+            "Instead of hardcoding text into HTML, we are pulling this data from a structured JSON file, acting as our database."
+        ]
+    },
+    "post_2": {
+        "id": "post_2",
+        "date": "2025-11-24",
+        "title": "Why Potatoes Matter?",
+        "paragraphs": [
+            "Potatoes = life, Potatoes = French Fries, French Fries = Happiness, Happiness come from Potatoes therefore Potatoes = life."
+        ]
+    }
+}
